@@ -27,6 +27,8 @@ public:
         k = k%len;
         if(k==0) return head;
         
+        //Just used fast and slow to reach the node before the new head.
+        //slow will be before new head;
         ListNode* fast = head;
         ListNode *slow = head;
         
