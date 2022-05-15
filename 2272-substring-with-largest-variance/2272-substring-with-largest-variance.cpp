@@ -24,7 +24,6 @@ public:
                     if(var <= -1 && ch == ch2){
                         startAtch2 = true;
                         containCh2 = true;
-                        var = -1;
                     } 
                     //if((ch1 == 'a' && ch2 == 'b') ||(ch1 == 'b' && ch2 == 'a') )
                     //cout << ch1 << " " << ch2 << " " << var << endl;
