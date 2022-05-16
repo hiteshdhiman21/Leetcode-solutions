@@ -11,8 +11,7 @@ public:
         k--;
         for(int ind=1; ind<=n; ind++){
             int posFind = 1;
-            if(k==0)  posFind = 1;
-            else posFind = k/impact[ind+1]+1;
+            if(k!=0) posFind = k/impact[ind+1]+1;
             
           //  cout << posFind << " " << numFind << " " << k << endl;
             
