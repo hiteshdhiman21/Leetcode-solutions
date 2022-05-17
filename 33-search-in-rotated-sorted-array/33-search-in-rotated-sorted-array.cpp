@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    int searchIn(vector<int> &nums, int start, int end, int target){
+    /*int searchIn(vector<int> &nums, int start, int end, int target){
         while(start <= end){
             int mid = (start+end)/2;
             if(nums[mid] < target){
@@ -44,5 +44,30 @@ public:
         
         //T - 2logn             
         //S - O(1)
+    }*/
+    
+    int search(vector<int>& nums, int target) {
+        int n = nums.size();
+        int start = 0, end = n-1;
+        
+        while(start <= end){
+            int mid=  (start+end)/2;
+            
+            if(nums[mid] == target) return mid;
+            else if(nums[start] <= nums[mid]){ //Is Left-side sorted
+                if(nums[start] <= target && target < nums[mid]){
+                    end = mid-1;
+                }else{
+                    start = mid+1;
+                }
+            }else{ //Is Right-side sorted
+               if(nums[mid] < target && target <= nums[end]){
+                    start = mid+1;
+                }else{
+                    end = mid-1;
+                } 
+            }
+        }
+         return -1;
     }
 };
