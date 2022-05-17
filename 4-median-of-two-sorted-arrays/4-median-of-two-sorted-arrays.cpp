@@ -30,7 +30,7 @@ public:
                 }
             }else if(l1 > r2){
                 high = cut1-1;
-            }else{
+            }else if(l2 > r1){
                 low = cut1+1;
             }
         }
