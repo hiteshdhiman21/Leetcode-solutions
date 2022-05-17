@@ -7,7 +7,7 @@ public:
         
         //start denotes that all the elements before the start only contain duplicates.
         //After start it can contain duplicates as well as single element.
-        //After the end+1, it only contains duplicate element
+        //After the end+1, it only contains duplicate element.
         while(start <= end){
             int mid = (start+end)/2;
             
