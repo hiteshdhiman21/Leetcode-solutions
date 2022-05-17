@@ -49,6 +49,11 @@ public:
     int search(vector<int>& nums, int target) {
         int n = nums.size();
         int start = 0, end = n-1;
+        //Modified - Binary search
+        //Depending on which side is sorted, i perform the operations
+        //If left-side is sorted -> if element in range, find in this side only. else, find in the right side
+        //If right-side is sorted ->If element in range, fing in this side only. else, find in the left side
+        //Opposite-sides of sorted side, can include lesser as well as greater elements.
         
         while(start <= end){
             int mid=  (start+end)/2;
@@ -69,5 +74,7 @@ public:
             }
         }
          return -1;
+        //T - logn
+        //S - O(1)
     }
 };
