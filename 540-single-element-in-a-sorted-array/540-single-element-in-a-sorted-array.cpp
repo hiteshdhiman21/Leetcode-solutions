@@ -1,32 +1,24 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int ind = nums.size()-1;
+        int n = nums.size();
+        int start = 0, end = n-2;
+        int ind = -1;
         
-        int start = 1;
-        int end = nums.size()-1;
-        
+        //start denotes that all the elements before the start only contain duplicates.
+        //After start it can contain duplicates as well as single element.
+        //After the end+1, it only contains duplicate element
         while(start <= end){
             int mid = (start+end)/2;
-         
-            if(mid%2==1){
-                if(nums[mid] != nums[mid-1]){
-                    ind = mid-1;
-                    end= mid-1;
-                }else{
-                    start = mid+1;
-                }
-            }else{
-                if(mid == 0 || nums[mid] == nums[mid-1]){
-                    ind = mid-1;
-                    end= mid-1;
-                }else{
-                    start = mid+1;
-                }
-            }
             
+            if(nums[mid] == nums[mid^1]){
+                start = mid+1;
+            }else{
+                end = mid-1;
+            }
         }
-        
-        return nums[ind];
+        return nums[start];
     }
+    //T - log(n)
+    //S - O(1)
 };
