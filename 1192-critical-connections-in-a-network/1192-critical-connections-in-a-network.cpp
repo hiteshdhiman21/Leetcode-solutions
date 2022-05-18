@@ -44,9 +44,9 @@ public:
         vector<vector<int>> ans;
         int curIdNo = 0;
         tarjans(0, -1, curIdNo, id, lowIdVis, adj, n, ans);
-        //for(auto x:low) cout << x << " " ;
-        //cout << endl;
         
         return ans;
+        //T - O(n)
+        //S - O(n)
     }
 };
