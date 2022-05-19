@@ -3,7 +3,6 @@ class MyStack {
     private:
     queue<int> q;
     
-    
 public:
     /** Initialize your data structure here. */
     MyStack() { }
@@ -12,12 +11,11 @@ public:
     void push(int x) {
         //Assume q follows the stack property in a FIFO way.
         //Push new element to queue from behind.
-        //Repush all the element from start to end except the new element into the queue.
+        //Repush all the element from start to end except the newly pushed element into the queue.
         //Now q again follows the stack property in a FIFO way.
         
         q.push(x);
-        int cur_size = q.size();
-        for(int i=1; i<cur_size; i++){
+        for(int i=1; i<=(int)q.size()-1; i++){
             q.push(q.front());
             q.pop();
         }
