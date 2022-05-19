@@ -1,50 +1,44 @@
 //Advice: Think of the push operation in a recursive way. It will be easy to understand.
-
-
 class MyStack {
     private:
-    queue<int> q1;
-    queue<int> q2;
+    queue<int> q;
     
     
 public:
     /** Initialize your data structure here. */
-    MyStack() {
-        
-    }
+    MyStack() { }
     
     /** Push element x onto stack. */
     void push(int x) {
-        //Assume q1 follows the stack property in a FIFO way.
-        //Push new element to queue.
-        //Push q1 elements into queue.
-        //Now q2 also follows the stack property in a FIFO way.
-        //Just swap q1 and q2. Now q1 follows the stack property(in FIFO way) and q2 is empty.
+        //Assume q follows the stack property in a FIFO way.
+        //Push new element to queue from behind.
+        //Repush all the element from start to end except the new element into the queue.
+        //Now q again follows the stack property in a FIFO way.
         
-        q2.push(x);
-        while(!q1.empty()){
-            q2.push(q1.front());
-            q1.pop();
+        q.push(x);
+        int cur_size = q.size();
+        for(int i=1; i<cur_size; i++){
+            q.push(q.front());
+            q.pop();
         }
-        swap(q1, q2);
     }
     
     /** Removes the element on top of the stack and returns that element. */
     int pop() {
-        //As q1 follows the stack property in FIFO Way. Remove element from q1.
-        int x = q1.front(); 
-        q1.pop();
+        //As q follows the stack property in FIFO Way. Remove front element from q.
+        int x = q.front(); 
+        q.pop();
         return x;
     }
     
     /** Get the top element. */
     int top() {
-        return q1.front();
+        return q.front();
     }
     
     /** Returns whether the stack is empty. */
     bool empty() {
-        return q1.size() == 0;
+        return q.size() == 0;
     }
     
     //Push - O(n), Pop - O(1)
