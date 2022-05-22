@@ -1,6 +1,11 @@
 class Solution {
 public:
     int countSubstrings(string s) {
+        
+        //Intuition: Fix each element as a center and try to expand the string maintaining it a center.
+        //Fix each and its next element as a center and try to expand the string maintaining them a center.
+        //If s[i] == s[j], do cnt++, i--, j++.
+        
         int n = s.size();
         int cnt = 0;
         cnt++;
@@ -20,5 +25,7 @@ public:
             
         }
         return cnt;
+        //T - n^2
+        //S - O(1)
     }
 };
