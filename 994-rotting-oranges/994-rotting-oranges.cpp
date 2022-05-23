@@ -1,51 +1,50 @@
 class Solution {
 public:
-    
-   
-    
+
+    //Just used BFS. Didn't even maintained a visited array. 
+    //Pushing everything into the queue, but running the loop only for elements inserted in the last iteration and popping them.
+    //If this iteration insert any element, means queue is not empty after this iteration. Then it means to rot these oranges, it would take one more day. 
     int orangesRotting(vector<vector<int>>& grid) {
         int n = grid.size(), m = grid[0].size();
-        vector<vector<int>> time(n, vector<int>(m, INT_MAX));
+        int tot = 0;
         
         queue<pair<int, int>> q;
         
-        
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(grid[i][j] == 2){
-                    q.push(make_pair(i, j));
-                    time[i][j] = 0;
-                }else if(grid[i][j] == 0){
-                    time[i][j] = 0;
-                }
+                if(grid[i][j] != 0) tot++;
+                if(grid[i][j] == 2) q.push(make_pair(i, j));
             }
         }
+        
+        int cntRotten = 0;
+        int days = 0;
+        
+        vector<int> dx({-1, 1, 0, 0});
+        vector<int> dy({0, 0, -1, 1});
         
         while(!q.empty()){
-            pair<int,int> pr = q.front(); q.pop();
-            int x = pr.first, y = pr.second;
+            int k = q.size();
+            cntRotten+=k;
             
-            vector<int> dx({0, 0, -1, +1});
-            vector<int> dy({-1, +1, 0, 0});
-            for(int  d= 0; d<4; d++){
-                int nx = x+dx[d], ny = y+dy[d];
-                if(nx == -1 || ny == -1 || nx == n || ny==m || time[nx][ny]<=time[x][y]) continue;
-                
-                time[nx][ny] = time[x][y]+1;
-                q.push(make_pair(nx, ny));
+            while(k--){
+                int x = q.front().first, y = q.front().second;
+                q.pop();
+                for(int d = 0; d<4; d++){
+                    int nx = x+dx[d], ny = y+dy[d];
+                    if(nx == -1 || nx == n|| ny == -1 || ny == m || grid[nx][ny] != 1) continue;
+                    
+                    q.push(make_pair(nx, ny));
+                    grid[nx][ny] = 2;
+                }
             }
+            
+            if(!q.empty()) days++;
             
         }
         
-        int ans = 0;
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                ans = max(ans, time[i][j]);
-            }
-        }
+        return cntRotten==tot?days:-1;
         
-        if(ans == INT_MAX)
-        return -1;
-        return ans;
+        
     }
 };
