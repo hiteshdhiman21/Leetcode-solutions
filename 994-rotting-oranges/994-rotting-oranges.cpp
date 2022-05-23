@@ -41,10 +41,9 @@ public:
             
             if(!q.empty()) days++;
             
-        }
-        
+        }        
         return cntRotten==tot?days:-1;
-        
-        
     }
+    //T - O(n*m)
+    //S - O(n*m) {due to queue}
 };
