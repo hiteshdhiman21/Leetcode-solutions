@@ -1,103 +1,133 @@
 class Node{
     public:
     int key;
-    int val;
+    int val;  
     int freq;
-    Node *prev;
-    Node *next;
-    
+    Node *next, *prev;  
     
     Node(int key, int val, int freq){
         this->key = key;
         this->val = val;
         this->freq = freq;
-        this->prev = this->next = NULL;
+        this->next = this->prev= NULL;
     }
 };
 
-class LFUCache {
-public:
-    int capacity;
-    Node* head, *tail;
-    map<int, Node*> freqTail; //To find tail for a group of each frequency nodes.
-    map<int, Node*> m; //To find address for each key-node.
+class LRU {
+    public:
+    Node *head, *tail;
+    int size;
     
-public:
-    
-    LFUCache(int& capacity) {
-        this->head = new Node(-1, -1, INT_MAX);
-        this->tail = new Node(-1, -1, INT_MIN);
-        this->head->next = this->tail;
-        this->tail->prev= this->head;
-        this->capacity = capacity;
-        freqTail[INT_MAX] = head;
-        freqTail[INT_MIN] = tail;
+    public:
+    LRU(){
+        this->head = new Node(-1, -1, -1);
+        this->tail = new Node(-1, -1, -1);
+        head->next = tail;
+        tail->prev= head;
+        this->size= 0;
     }
+    
+    
     
     void deleteNode(Node *delNode){
         Node *prevNode = delNode->prev;
-        Node *nextNode = delNode->next;
+        Node* nextNode = delNode->next;
         prevNode->next = nextNode;
         nextNode->prev = prevNode;
-        if(freqTail[delNode->freq] == delNode){
-            freqTail.erase(delNode->freq);
-            freqTail[prevNode->freq] = prevNode;
-        }
-        
+        size--;
     }
     
     void insertNode(Node *insNode){
-        if(freqTail.count(insNode->freq) == 0) freqTail[insNode->freq] = insNode;
         
-        Node *prevNode = (*(freqTail.upper_bound(insNode->freq))).second;
-        Node *nextNode = prevNode->next;
-        prevNode->next = insNode;
-        nextNode->prev = insNode;
-        insNode->prev = prevNode;
+        Node *nextNode = head->next;
+        head->next = insNode;
+        insNode->prev = head;
         insNode->next = nextNode;
-      
+        nextNode->prev = insNode;
+        size++;
     }
+    
+};
+
+
+class LFUCache {
+public:
+    int mn_freq;
+    int capacity;
+    //int size;
+    unordered_map<int, LRU*> freqList;
+    unordered_map<int, Node*> m;
+    
+public:
+    //Simply used A list of LRU cache with some modifications
+    void printMap(){
+        cout << "map ";
+        for(auto __:m) cout << "["<< __.first << ", " << __.second->freq <<"], ";
+        cout << endl;
+    }
+    LFUCache(int& capacity) {
+        this->capacity = capacity;
+        //this->size = 0;
+        this->mn_freq = 0;
+    }
+    
     
     int get(int key) {
         
-        if(capacity == 0 || m.count(key) == 0) return -1;
+        if(!m.count(key)) return -1;
         
         Node *resNode = m[key];
         int resVal = resNode->val;
         int resFreq = resNode->freq;
-        resFreq++;
-        deleteNode(resNode); //
+        freqList[resFreq]->deleteNode(resNode);
         m.erase(key);
         
+        if(mn_freq == resFreq && freqList[resFreq]->size == 0) mn_freq = resFreq+1;
+        
+        resFreq++;
         Node *newNode = new Node(key, resVal, resFreq);
         m[key] = newNode;
-        insertNode(newNode);
+        if(freqList.count(resFreq) == 0){
+            freqList[resFreq] = new LRU;
+        }
+        
+        freqList[resFreq]->insertNode(newNode); 
+      
         return resVal;
     }
     
     void put(int key, int value) {
         if(capacity == 0) return;
-        int freq = 0;
-               
-        if(m.count(key)> 0){
-            Node* resNode = m[key];
-            freq = resNode->freq;
-            deleteNode(resNode);
+        
+        
+        int oldFreq = 0;
+       
+        if(m.count(key)>0){
+            Node*oldNode = m[key];
+            oldFreq = oldNode->freq;
             m.erase(key);
+            freqList[oldFreq]->deleteNode(oldNode);
+            
+            if(mn_freq == oldFreq && freqList[oldFreq]->size== 0) mn_freq = oldFreq+1;
         }
+        
+        oldFreq++;
         
         
         if(m.size() == capacity){
-            m.erase(tail->prev->key);
-            deleteNode(tail->prev);
+            
+            Node *toDel = freqList[mn_freq]->tail->prev;
+            int toDelKey = toDel->key;
+            freqList[mn_freq]->deleteNode(toDel);
+            m.erase(toDelKey);
         }
-        freq++;
         
-        
-        
-        Node *newNode = new Node(key, value, freq);
+        Node *newNode = new Node(key, value, oldFreq);
+        if(freqList.count(oldFreq) == 0) freqList[oldFreq] = new LRU;
+        freqList[oldFreq]->insertNode(newNode);
         m[key] = newNode;
-        insertNode(newNode);
+        if(oldFreq == 1) mn_freq = 1;
+        
     }
 };
 
