@@ -26,9 +26,7 @@ class LRU {
         tail->prev= head;
         this->size= 0;
     }
-    
-    
-    
+       
     void deleteNode(Node *delNode){
         Node *prevNode = delNode->prev;
         Node* nextNode = delNode->next;
@@ -49,31 +47,28 @@ class LRU {
     
 };
 
-
+//Simply used lists of LRU cache with some modifications.
+//We maintain a list for each possible frequency using map freqList which stores (freq, list)
 class LFUCache {
 public:
     int mn_freq;
     int capacity;
-    //int size;
     unordered_map<int, LRU*> freqList;
     unordered_map<int, Node*> m;
     
 public:
-    //Simply used A list of LRU cache with some modifications
-    void printMap(){
-        cout << "map ";
-        for(auto __:m) cout << "["<< __.first << ", " << __.second->freq <<"], ";
-        cout << endl;
-    }
+    
     LFUCache(int& capacity) {
         this->capacity = capacity;
-        //this->size = 0;
         this->mn_freq = 0;
     }
     
-    
     int get(int key) {
-        
+        //Basically we get the value at key and transfer the node from list of old freq to new freq. 
+        //Step-1. Get the resNode address using m[key].
+        //Step-2. Call deleteNode on freqList[resFreq], it will go to LRU of resFreq nodes and remove node from there. Now if old_freq = mn_freq and freqList[old_freq] contians no elements, set mn_freq = old_freq+1/
+        //Step-3. Make a new node with freq = oldFreq+1. and insert it in freqList[resFreq+1].
+         
         if(!m.count(key)) return -1;
         
         Node *resNode = m[key];
@@ -97,8 +92,12 @@ public:
     }
     
     void put(int key, int value) {
-        if(capacity == 0) return;
+        //Step-1. First remove the old node for this key.
+        //Step-2. If size == capacity, call deleteNode on freqList[mn_freq], it will go to LRU of mn_freq nodes and remove LRU node from there. Now if old_freq = mn_freq and freqList[old_freq] contians no elements, set mn_freq = old_freq+1
+        //Step-3. Make a new node with freq = oldFreq+1. and insert it in freqList[freq].
+        //Step-4. If oldFreq == 0, update mn_freq = 1. 
         
+        if(capacity == 0) return;
         
         int oldFreq = 0;
        
@@ -126,9 +125,11 @@ public:
         if(freqList.count(oldFreq) == 0) freqList[oldFreq] = new LRU;
         freqList[oldFreq]->insertNode(newNode);
         m[key] = newNode;
-        if(oldFreq == 1) mn_freq = 1;
-        
+        if(oldFreq == 1) mn_freq = 1;  
     }
+    
+    //T - O(1) for all operations
+    //S - O(n)
 };
 
 /**
