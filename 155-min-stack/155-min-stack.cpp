@@ -1,35 +1,38 @@
-//Maintain an additional stack mst with a normal stack st
-//We will maintain minimum element on top of mst so to perform getMin() in O(1). So we will store elements in mst in increasing order from the top.
-//Push(x) -> st.push(x). if x <= mst.top(), also do mst.push(x)
-//Pop() -> if st.top() == mst.top(), we also need to pop from the mst
+//Push(x) -> If x < mn, push(2*x - mn) and do mn = x
+//Pop() -> if st.top() < mn, return st.top() and do mn = 2*mn-st.top(). else return st.top()
 
 class MinStack {
 public:
-    stack<int> st;
-    stack<int> mst;
+    stack<long long> st;
+    long long mn;
     
 public:
-    MinStack() {    }
+    MinStack() { mn = INT_MAX;   }
     
     void push(int val) {
-        st.push(val);
-        if(mst.empty() || mst.top() >= val) mst.push(val);
-    }
-    
-    void pop() {
-        if(st.top() == mst.top()){
-            st.pop(); mst.pop();
+        if(val>= mn){
+            st.push(val);
+            mn = min(mn, (long long)val); //Also true in empty case
         }else{
-            st.pop();
+            st.push(2ll*val-mn);
+            mn = val;
         }
     }
     
+    void pop() {
+        if(st.top() < mn){
+           mn = 2*mn-st.top();
+        }
+        st.pop();
+    }
+    
     int top() {
-        return st.top();
+        if(st.top() < mn) return mn;
+        else return st.top();
     }
     
     int getMin() {
-        return mst.top();
+        return mn;
     }
     //T - O(1) for all operations
     //S - O(n) maintaining an additional min stack in addition to normal stack
