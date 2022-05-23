@@ -20,8 +20,8 @@ public:
         for(int i=strs.size()-1; i>=0; i--){
             for(int cz = tzr; cz >= 0; cz--){
                 for(int co = tor; co >= 0; co--){
-                    if(cz-1 >= 0) dp[cz][co] = max(dp[cz][co], dp[cz-1][co]);
-                    if(co-1 >= 0) dp[cz][co] = max(dp[cz][co], dp[cz][co-1]);
+                    //if(cz-1 >= 0) dp[cz][co] = max(dp[cz][co], dp[cz-1][co]);
+                    //if(co-1 >= 0) dp[cz][co] = max(dp[cz][co], dp[cz][co-1]);
                     
                     pair<int,int> czos = count(strs[i]);
                     int czs = czos.first;
