@@ -24,7 +24,7 @@ public:
     
 public:
     
-    LFUCache(int capacity) {
+    LFUCache(int& capacity) {
         this->head = new Node(-1, -1, INT_MAX);
         this->tail = new Node(-1, -1, INT_MIN);
         this->head->next = this->tail;
@@ -79,14 +79,14 @@ public:
         if(capacity == 0) return;
         int freq = 0;
                
-        if(m.count(key)> 0){ cout << key << "Prsent "<< endl;
+        if(m.count(key)> 0){
             Node* resNode = m[key];
             freq = resNode->freq;
             deleteNode(resNode);
             m.erase(key);
         }
         
-        cout << "capacity: "<<m.size() << endl;
+        
         if(m.size() == capacity){
             m.erase(tail->prev->key);
             deleteNode(tail->prev);
