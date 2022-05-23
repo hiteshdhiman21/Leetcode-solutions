@@ -5,7 +5,7 @@ public:
         
         //Step-1. Travelling through the whole array.
         //Step-2. At each index, first remove out of window elements from front. And then insert the cur element such that the elements in dq are in decreasing order. Remove all the elements smaller than the current element and then insert the current element. 
-        //Reason: smaller elements inserted before the current element does not matter for this and other future windows.
+        //Reason: smaller elements inserted before the current element does not matter for this and other future windows.(As in all the future windows those smaller elements present, this element also present)
         deque<int> dq;
         int n = arr.size();
         
@@ -25,8 +25,10 @@ public:
             }           
         }
         
-        return ans;         
+        return ans;      
     }
+    //T - O(n)
+    //S - O(n)
 
     
 };
