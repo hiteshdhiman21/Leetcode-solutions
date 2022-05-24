@@ -5,8 +5,9 @@ public:
     int day;
     
 public:
-    StockSpanner() { day=0;  }
+    StockSpanner() { day=0;}
     
+    //Similar to previous greater element. Maintain a increasing stack(Top-Bottom)
     int next(int price) {
         day++;
         
@@ -21,6 +22,10 @@ public:
         st.push(make_pair(price, day));
         return ans;
     }
+    
+    //T - O(n)  
+    //S - O(n)
+    
 };
 
 /**
