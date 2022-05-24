@@ -13,6 +13,8 @@ class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         
+        //Similar to inorder.
+        //Here if cur is not null we first print it and then go to the left child. else, cur = st.pop() and cur = cur->right
         vector<int> ans;
         
         TreeNode* cur = root;
@@ -32,4 +34,6 @@ public:
         
         return ans;
     }
+    //T - O(n)
+    //S - O(h)  = O(n) in case of skewed trees.
 };
