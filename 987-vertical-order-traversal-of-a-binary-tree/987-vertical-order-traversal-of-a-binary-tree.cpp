@@ -31,9 +31,9 @@ public:
         }
         
         vector<vector<int>> ans;
-        for(auto _:lineLevelNodes){ //each line(column) -> starting from leftmost line
+        for(auto _:lineLevelNodes){ //each line(column) -> starting from leftmost line {_.first, line}, {_.second, level with nodes}
             ans.push_back({}); 
-            for(auto __:_.second){ //each level(row) -> starting from top level
+            for(auto __:_.second){ //each level(row) -> starting from top level  {__.first, level}, {__.second, nodes in level}
                 ans.back().insert(ans.back().end(), __.second.begin(), __.second.end()); //ascending order in same row
             }
         }
