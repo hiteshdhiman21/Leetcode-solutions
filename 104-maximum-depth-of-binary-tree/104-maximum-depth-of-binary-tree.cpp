@@ -12,6 +12,7 @@
 class Solution {
 public:
     
+    //Recursive solution is better than level order
     int maxDepth(TreeNode* root) {
         if(root == NULL) return 0;
         int leftSubHeight = maxDepth(root->left);
@@ -19,5 +20,6 @@ public:
         return max(leftSubHeight, rightSubHeight)+1;
     }
     //T - O(n)
-    //S - O(1)
+    //S - O(h) = O(n) in worst case(skew-tree) and O(logn) in average case(balanced-tree)
+    //S - O(n/2) in worst case and average case (Balanced tree)
 };
