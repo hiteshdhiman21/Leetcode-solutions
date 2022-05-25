@@ -20,6 +20,6 @@ public:
         return max(leftSubHeight, rightSubHeight)+1;
     }
     //T - O(n)
-    //S - O(h) = O(n) in worst case(skew-tree) and O(logn) in average case(balanced-tree)
-    //S - O(n/2) in worst case and average case (Balanced tree)
+    //S - O(h) = O(n) in worst case(skew-tree) and O(logn) in average case(balanced-tree) for recursive
+    //S - O(n/2) in worst case and average case (Balanced tree) for level order.
 };
