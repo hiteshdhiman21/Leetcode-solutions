@@ -19,10 +19,12 @@ public:
         if(root!=NULL) q.push(root);
         vector<vector<int>> ans;
         
+        //Way to traverse each level separately
         while(!q.empty()){
-            int size = q.size();
+            int size = q.size(); //No. of nodes in the current level
             ans.push_back({});
-            for(int i=0; i<size; i++){
+            //Only visit the current level nodes which are pushed earler New nodes pushed will not be visited.
+            for(int i=0; i<size; i++){ 
                 TreeNode *cur = q.front(); q.pop();
                 ans.back().push_back(cur->val);
                 if(cur->left) q.push(cur->left);
