@@ -106,9 +106,11 @@ class Solution
     //from left to right in Binary Tree.
     vector<int> topView(Node *root)
     {
+        //Similar to Bottom view
+        //In this we only put the first node from top for each line while traversing in level order
         unordered_map<int, int> lineVsVal;
         int min_line_val = 0;
-        int tot_nodes = 0;
+        int tot_lines = 0;
         queue<pair<Node*, int>> q;
         if(root)
             q.push(make_pair(root, 0));
@@ -122,14 +124,14 @@ class Solution
             if(lineVsVal.count(line) == 0){
                 lineVsVal[line] = cur->data;
                 min_line_val = min(min_line_val, line);
-                tot_nodes++;
+                tot_lines++;
             }
             
             if(cur->left) q.push(make_pair(cur->left, line-1));
             if(cur->right) q.push(make_pair(cur->right, line+1));
         }
         
-        vector<int> ans(tot_nodes);
+        vector<int> ans(tot_lines);
         for(auto _: lineVsVal){
             int line = _.first;
             int val = _.second;
@@ -140,7 +142,6 @@ class Solution
     }
     //T - O(n)
     //S - O(n)
-
 };
 
 
