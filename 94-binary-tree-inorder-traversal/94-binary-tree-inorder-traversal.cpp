@@ -101,7 +101,7 @@ public:
         
         return ans;
     }
-    //T - O(n)
+    //T - O(n) amortized
     //S - O(1)
 
 };
