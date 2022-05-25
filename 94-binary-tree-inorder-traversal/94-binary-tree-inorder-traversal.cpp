@@ -68,6 +68,7 @@ class Solution {
 public:
 
     vector<int> inorderTraversal(TreeNode* root) {
+        //Approach: Morris Traversal
         //Step-1. While cur is not empty traverse. (Fact: Always leftmost node is visited first and rightmost node is visited last)
         //Case-1: If(cur doesn't have left), Just print the cur and move to right child.
         //Case-2: If(cur have left), Go to the rightmost node int the left subtree and if its right link is NULL(it means left subtree is not visited yet), make its right link to the cur and move to the left child.
