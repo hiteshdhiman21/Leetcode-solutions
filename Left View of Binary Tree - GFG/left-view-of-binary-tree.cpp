@@ -127,10 +127,10 @@ struct Node
  */
 
 //Function to return a list containing elements of left view of the binary tree.
-vector<int> leftView(Node *root)
+/*vector<int> leftView(Node *root)
 {
     //Do the level order traversal of the tree and for each level pick only first node in the answer
-    
+    //Use queue and BFS technique for level order traversal.
     
     vector<int> ans;
    
@@ -152,4 +152,23 @@ vector<int> leftView(Node *root)
     return ans;
 }
 //T - O(n) 
-//S - O(1)
+//S - O(1)*/
+
+void levelOrder(Node *root, int level ,vector<int> &ans)
+{
+    if(root == NULL) return;
+    if(ans.size() == level) ans.push_back(root->data);
+    levelOrder(root->left, level+1, ans);
+    levelOrder(root->right, level+1, ans);
+}
+
+vector<int> leftView(Node *root)
+{
+    vector<int> ans;
+    levelOrder(root, 0, ans);
+    return ans;
+}
+//T - O(n)
+//S - O(h) = O(n) in case of skewed trees
+//Note: Prefer Recursive over iterative in Level-order as recursive take S = O(h) = O(logn) and iterative queue
+//      take S = O(n/2) in case of perfect Binary trees.
