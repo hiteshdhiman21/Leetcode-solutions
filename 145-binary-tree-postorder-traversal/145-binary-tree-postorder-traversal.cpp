@@ -9,7 +9,7 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+/*class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
         //using 2 stacks. Take top element from stack1 and transfer it to stack 2.
@@ -40,4 +40,36 @@ public:
     }
     //T - O(n)
     //S - O(1)
+};*/
+
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        //Uses cur to explore downward
+        //Uses temp to go to right child and its ancestors.
+        vector<int> ans;
+        stack<TreeNode*> st;
+        TreeNode *cur = root;
+        
+        while(cur != NULL || !st.empty()){ 
+            if(cur != NULL){
+                st.push(cur);
+                cur = cur->left;
+            }else{
+                TreeNode *temp = st.top()->right;
+                if(temp==NULL){//Here visiting all the ancestors whose right child has been visited
+                    temp = st.top(); st.pop();
+                    ans.push_back(temp->val);
+                    while(!st.empty() && temp == st.top()->right){ //temp is visited and so temp == st.top()->right means st.top()->right child is visited. Hence now visiting st.top().
+                        temp = st.top(); st.pop();
+                        ans.push_back(temp->val);
+                    }
+                }else{//Visiting right child and its both childrens in postorder fashion
+                    cur = temp;
+                }
+            }  
+        } 
+        return ans;
+    }
 };
