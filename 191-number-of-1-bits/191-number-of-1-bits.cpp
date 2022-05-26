@@ -9,4 +9,6 @@ public:
         
         return cnt;
     }
+    //T - O(No. of set bits)
+    //S - O(1)
 };
