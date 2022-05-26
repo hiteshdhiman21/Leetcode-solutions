@@ -137,7 +137,7 @@ public:
             if(cur->right) cur = cur->right;
             else cur = cur->left;
         }
-        ans.insert(ans.end(),temp.rbegin(), temp.rend());
+        ans.insert(ans.end(),temp.rbegin(), temp.rend()); //Adding temp vector in reverse order
     }
     
     vector <int> boundary(Node *root)
@@ -161,6 +161,8 @@ public:
       
         return ans;
     }
+    //T - O(n)
+    //S - O(h)
 };
 
 // { Driver Code Starts.
