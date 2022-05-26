@@ -14,8 +14,8 @@ public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
         if(!p&&!q) return true; //If both are null
         else if(!p || !q) return false; //If only one is null
-        else if(p->val != q->val) return false; //the corresponding data is different
-        else return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        //Check if subtrees and root of both tree are identical
+        else return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
     //T - O(n)
     //S - O(1)
