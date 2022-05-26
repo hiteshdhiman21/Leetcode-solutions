@@ -12,7 +12,11 @@
 class Solution {
 public:
     
+    //The function will return height of the tree rooted at the given node
     int checkBalance(TreeNode *root, bool& balance){
+        //Don't call checkBalance twice i.e. once for height calculation and then for checking if left and right subtrees are balanced or not.
+        //Both work can be happen in one call. While calculating its height, it can also check if the given tree is balanced or not.
+        //Function can return more than 2 values or can take some extra parameter
         if(root == NULL) return 0;
         int lh = checkBalance(root->left, balance);
         int rh = checkBalance(root->right, balance);
@@ -25,4 +29,6 @@ public:
         checkBalance(root, balance);
         return balance;
     }
+    //T - O(n)
+    //S - O(1)
 };
