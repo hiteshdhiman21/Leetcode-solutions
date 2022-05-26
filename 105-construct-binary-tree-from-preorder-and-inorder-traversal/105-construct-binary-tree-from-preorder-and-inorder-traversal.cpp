@@ -30,6 +30,11 @@ public:
     }
     
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        //Intuition: Believe that recursion wil create correct subtrees and will return their roots.
+        //Step-1. Find root from preorder and find index of root in inorder(inRoot). Create root.
+        //Step-2. Inorder before the inRoot is inorder of left subtree and after inRoot is of right subtree.
+        //Step-3. Preorder of leftsubtree will start from 2nd index followed by preorder of right subtree.
+        //Step-4. Using above, ask recursion to create left and right subtrees and join them with the root.
         unordered_map<int, int> inMap; //Using map for efficient retrieval of indices for different values
         for(int i=0; i<inorder.size(); i++) inMap[inorder[i]] = i;
         return buildTree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1, inMap);
