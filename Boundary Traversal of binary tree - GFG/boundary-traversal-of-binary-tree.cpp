@@ -151,7 +151,7 @@ public:
         vector<int> ans;
         
         if(root == NULL) return ans;
-        if(!isLeaf(root)) ans.push_back(root->data);
+        if(!isLeaf(root)) ans.push_back(root->data); //Adding root
         
         addLeftBoundary(root->left, ans); //Left boundary excluding root and leaf nodes
        
