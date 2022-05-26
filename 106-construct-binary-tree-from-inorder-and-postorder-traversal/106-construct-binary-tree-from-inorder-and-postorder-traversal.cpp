@@ -18,8 +18,8 @@ public:
         int inRoot = inMap[rootData]; //Root index in inorder
         TreeNode *root = new TreeNode(rootData); //Create root
         
-        int postE2 = postEnd-1, inS2 = inRoot+1, inE2 = inEnd, postS2 = postE2-inE2+inS2; //postE-postS = inE-inS
-        int postE1 = postS2-1, inS1 = inStart, inE1 = inRoot-1, postS1 = postE1-inE1+inS1;
+        int postS1 = postStart, inS1 = inStart, inE1 = inRoot-1, postE1 = postS1+inE1-inS1;//postE-postS = inE-inS
+        int postS2 = postE1+1, inS2 = inRoot+1, inE2 = inEnd, postE2 = postS2+inE2-inS2; 
         
         root->left = buildTree(inorder, inS1, inE1, postorder, postS1, postE1, inMap); //Join left subtree
         root->right = buildTree(inorder, inS2, inE2, postorder, postS2, postE2, inMap); //Join right subtree
