@@ -11,27 +11,30 @@
  */
 class Solution {
 public:
-    int findIndex(vector<int>& v, int s, int e, int val){
-        for(int i=s; i<=e; i++){
-            if(v[i] == val) return i;
-        }
-        return -1;
-    }
+
     
-    TreeNode* buildTree(vector<int>& preorder, int s1, int e1, vector<int>& inorder, int s2, int e2){
-        if(s1>e1) return NULL;
-        int rootData = preorder[s1];
-        TreeNode *root = new TreeNode(rootData);
-        int ns1 = s1+1;
-        int ne2 = findIndex(inorder, s2, e2, rootData)-1;
-        int ns2 = s2;
-        int ne1 = ne2-ns2+ns1;
-        root->left = buildTree(preorder, ns1, ne1, inorder, ns2, ne2);
-        root->right = buildTree(preorder, ne1+1, e1, inorder, ne2+2, e2);
+    TreeNode* buildTree(vector<int>& preorder, int preStart, int preEnd, vector<int>& inorder, int inStart, int inEnd, unordered_map<int, int>& inMap){
+        if(preStart > preEnd) return NULL;
+        
+        int rootData = preorder[preStart]; //Root = first element of preorder
+        int inRoot = inMap[rootData]; //Root index in inorder
+        TreeNode *root = new TreeNode(rootData); 
+        
+        int preS1 = preStart+1, inS1 = inStart, inE1 = inRoot-1, preE1 = preS1+inE1-inS1; //preE-preS = inE-inS
+        int preS2 = preE1+1, inS2 = inRoot+1, inE2 = inEnd, preE2 = preEnd;
+        
+        root->left = buildTree(preorder, preS1, preE1, inorder, inS1, inE1, inMap);
+        root->right = buildTree(preorder, preS2, preE2, inorder, inS2, inE2, inMap);
+        
         return root;
     }
     
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return buildTree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1);
+        unordered_map<int, int> inMap; //Using map for efficient retrieval of indices for different values
+        for(int i=0; i<inorder.size(); i++) inMap[inorder[i]] = i;
+        return buildTree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1, inMap);
     }
+    //T - O(n)
+    //S - O(n) for storing inorder values vs indexes in hashmap
+    //T - O(n^2) and S - O(1) if find index at every node without using hashmap
 };
