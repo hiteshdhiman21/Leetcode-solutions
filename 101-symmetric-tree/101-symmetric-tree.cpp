@@ -14,7 +14,7 @@ public:
     
     
     bool isSymmetric(TreeNode* root) {
-        //Mirror-> left(right) subtree of every node of tree1(root->left) should mirror to right(left) subtree of corresponding node of tree2(root->right). which means nodes of both trees should coincide when visited in Mirror(opposite) order.
+        //Mirror-> left(right) subtree of every node of tree1(root->left) should mirror to right(left) subtree of corresponding node of tree2(root->right). which means nodes of both trees should coincide when visited in Mirror(opposite one LR and other RL) order.
         //Step-1. Traverse nodes of both the tree in opp order. if node1->val != node2->val || (both doesn't have same no. of NOT NULL connections). Then return false. 
         //Step-2. After one tree is traversed fully, check if other is fully traversed or Not.
         //Step-3. If not return false, else return true.
