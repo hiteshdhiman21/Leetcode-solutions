@@ -59,6 +59,7 @@ public:
     //T - O(n)
     //S - O(n)*/
     
+    /*
     void flatten(TreeNode *root){
         //Just use revers Postorder
         //Intuition: In this way, First:  Every root will connect to its left or right child if presents. Second: the rightmost node on left subtree will be visited last of whole left subtree and will connect to the right child of parent of left subtree.
@@ -76,7 +77,29 @@ public:
         }
     }
     //T - O(n)
-    //S - O(n)
+    //S - O(n)*/
+    
+    void flatten(TreeNode *root){
+        //Best approach
+        //Intuition: Use Morris traveral: For every root node, If left node present, connect rightmost node of its left subtree to its(root's) right and update root->right = root->left, root->left = NULL
+        
+        TreeNode *cur = root;
+        while(cur){
+            if(cur->left){
+                TreeNode *prev = cur->left;
+                while(prev-> right) prev = prev->right;
+                prev->right = cur->right;
+                cur->right = cur->left;
+                cur->left = NULL;
+            }
+            
+            cur = cur->right;
+        }
+        
+    }
+    //T - O(n)
+    //S - O(1)
+    
     
 
 };
