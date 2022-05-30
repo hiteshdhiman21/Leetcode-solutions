@@ -41,7 +41,7 @@ public:
         flat(root);
     }*/
     
-    TreeNode *prev = NULL;
+    /*TreeNode *prev = NULL;
     void flatten(TreeNode *root){
         //Just use revers Postorder
         //Intuition: In this way, First:  the node visited first in left subtree postorder will connect to the node visited last in right subtree postorder. Second: the root will connect to the node visited last in left subtree postorder.
@@ -57,6 +57,26 @@ public:
         prev = root;
     }
     //T - O(n)
-    //S - O(1)
+    //S - O(n)*/
+    
+    void flatten(TreeNode *root){
+        //Just use revers Postorder
+        //Intuition: In this way, First:  Every root will connect to its left or right child if presents. Second: the rightmost node on left subtree will be visited last of whole left subtree and will connect to the right child of parent of left subtree.
+        
+        stack<TreeNode*> st;
+        if(root)
+        st.push(root);
+        while(!st.empty()){
+            TreeNode *cur = st.top(); st.pop();
+            if(cur->right) st.push(cur->right);
+            if(cur->left) st.push(cur->left);
+            if(!st.empty())
+            cur->right = st.top();
+            cur->left = NULL;
+        }
+    }
+    //T - O(n)
+    //S - O(n)
+    
 
 };
