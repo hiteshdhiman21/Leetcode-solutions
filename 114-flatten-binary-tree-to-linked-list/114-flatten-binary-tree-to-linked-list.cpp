@@ -12,7 +12,7 @@
 class Solution {
 public:
     
-    pair<TreeNode*, TreeNode*> flat(TreeNode *root){
+    /*pair<TreeNode*, TreeNode*> flat(TreeNode *root){
         if(root == NULL || (!root->left && !root->right)) return {root, root};
 
         
@@ -39,5 +39,24 @@ public:
     
     void flatten(TreeNode* root) {
         flat(root);
+    }*/
+    
+    TreeNode *prev = NULL;
+    void flatten(TreeNode *root){
+        //Just use revers Postorder
+        //Intuition: In this way, First:  the node visited first in left subtree postorder will connect to the node visited last in right subtree postorder. Second: the root will connect to the node visited last in left subtree postorder.
+        
+        if(root == NULL) return;
+        
+        flatten(root->right);
+        flatten(root->left);
+        
+        root->right = prev;
+        root->left = NULL;
+        
+        prev = root;
     }
+    //T - O(n)
+    //S - O(1)
+
 };
