@@ -41,7 +41,6 @@ class Trie{
         int ans = 0;
         Node *cur = root;
         for(int i=30; i>=0; i--){
-            if(cur == NULL) return ans;
             
             bool bit = (num&(1<<i)); //We can also use ((num>>i)&(1)) to get in terms of 0 and 1 only 
             bool bestBit = !bit;
