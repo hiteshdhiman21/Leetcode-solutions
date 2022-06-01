@@ -12,15 +12,11 @@
 class Solution {
 public:
     TreeNode* searchBST(TreeNode* root, int val) {
-        TreeNode *cur = root;
-        while(cur){
-            if(cur->val == val) return cur;
-            else if(cur->val > val) cur = cur->left;
-            else cur = cur->right;
+        while(root!=NULL && root->val != val){
+            root = (val<root->val)?root->left:root->right;
         }
-        
-        return cur;
+        return root;
     }
-    //T - O(h) = O(n) for skewed tree
+    //T - log(n) = O(h)
     //S - O(1)
 };
