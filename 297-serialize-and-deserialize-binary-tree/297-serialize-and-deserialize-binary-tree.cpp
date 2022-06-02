@@ -15,6 +15,7 @@ public:
         //Coverting the tree into level order traversal form
         //Also pushing the null child into the queue
         //Not exploring the null child's subtrees
+        //Can use any traversal out there
         if(root == NULL) return "";
         
         queue<TreeNode*> q;
@@ -34,6 +35,7 @@ public:
         
         cout << res << endl;
         return res;
+        //Extra nulls of last level are also appended into the string.
     }
 
     // Decodes your encoded data to tree.
