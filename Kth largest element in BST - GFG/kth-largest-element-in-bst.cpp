@@ -99,8 +99,8 @@ class Solution
     public:
     int kthLargest(Node *root, int k)
     {
-        //Just doing Morris inorder traversal and maintaining a cur Node no. pointer
-        //As inorder traveral visits the node in sorted order, the kth node no have kth smallest value.
+        //Just doing Morris reverse inorder traversal and maintaining a cur Node no. pointer
+        //As reverse inorder traveral visits the node in reverse sorted order, the kth node no have kth largest value.
         int curNo = 0;
         Node *cur = root;
         int ans = -1;
