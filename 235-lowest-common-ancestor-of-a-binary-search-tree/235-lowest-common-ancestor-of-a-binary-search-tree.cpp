@@ -11,14 +11,18 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root == NULL || root == p || root == q) return root;
+        //Three cases:
+        //1. Both nodes are on left side of root. Hence LCA is also on left side.
+        //2. Both nodes are on right side of root. Hence LCA is also on right side.
+        //3. One is on left side and other on right side, hence this is LCA.
+        TreeNode *cur = root;
+        while(cur && cur != p && cur != q){
+            if(p->val < cur->val && q->val < cur->val) cur = cur->left;
+            else if(cur->val < p->val && cur->val < q->val) cur = cur->right;
+            else return cur;
+        }
         
-        //Both nodes are on left side of root. Hence LCA is also on left side.
-        if(p->val < root->val && q->val < root->val) return lowestCommonAncestor(root->left, p, q);
-        //Both are on right side of root. Hence LCA is also on right side
-        else if(root->val < p->val && root->val < q->val) return lowestCommonAncestor(root->right, p, q);
-        //One is on left side and other on right side, hence this is LCA.
-        else return root;
+        return cur;
     }
     //T - O(h) = O(logn)
     //S - O(h) = O(logn)
