@@ -25,5 +25,5 @@ public:
         return cur;
     }
     //T - O(h) = O(logn)
-    //S - O(h) = O(logn)
+    //S - O(1)
 };
