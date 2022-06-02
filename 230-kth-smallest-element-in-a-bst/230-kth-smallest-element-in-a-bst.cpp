@@ -12,22 +12,41 @@
 class Solution {
 public:
     
-    int kthSmallest(TreeNode *root, int& k, int& cur){
-        if(root == NULL) return -1;
-        
-        int ansLeft = kthSmallest(root->left, k, cur);
-        if(ansLeft != -1) return ansLeft;
-        
-        cur++;
-        if(k==cur) return root->val;
-        
-        int ansRight = kthSmallest(root->right, k, cur);
-        return ansRight;
-        
-    }
+    
     
     int kthSmallest(TreeNode* root, int k) {
-        int cur = 0;
-        return kthSmallest(root, k, cur);
+        //Just doing Morris inorder traversal and maintaining a cur Node no. pointer
+        //As inorder traveral visits the node in sorted order, the kth node no have kth smallest value.
+        
+        int curNo = 0;
+        TreeNode *cur = root;
+        int ans = -1;
+         
+        while(cur){
+            if(!cur->left){
+                curNo++;
+                if(curNo == k) ans = cur->val;
+                cur = cur->right;
+            }else{
+                TreeNode *prev = cur->left;
+                while(prev->right != NULL && prev->right != cur){
+                    prev = prev->right;
+                }
+                
+                if(prev->right != cur){ 
+                    prev->right = cur;
+                    cur = cur->left;
+                }else{
+                    prev->right = NULL;
+                    curNo++;
+                    if(curNo == k) ans = cur->val;
+                    cur = cur->right;
+                }
+            }
+        }
+        
+        return ans; 
     }
+    //T - O(n) amortized
+    //S - O(1)
 };
