@@ -111,6 +111,13 @@ class Solution
     Node * bToDLL(Node *root)
     {
         
+    //No need to worry about changing links in the left subtree of a node.
+    //1. Before traversing left subtree, The node->left->right->right .... ->right is Inorder predecessor of the node.
+    //2. After traversing left subtree, The node->left->right->right ... ->right is also Inorder predecessor(same node) of the node.
+    //3. As the links are made in inorder fashion, Hence node->left->right .. ->right will come to the same node.
+    //      as that node was the last in inorder just before the cur in both(before and after) situations.
+    //4. curPrev will be equal to prev in the above situations, i.e. where cur->left is present and already traversed fully.
+        
     Node *cur = root;
     Node *head = NULL;
     Node *curPrev = NULL;
@@ -146,6 +153,8 @@ class Solution
         
     return head;    
     }
+    //T - O(n) amortized
+    //S - O(1)
 };
 
 
