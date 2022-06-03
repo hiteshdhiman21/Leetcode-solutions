@@ -113,19 +113,19 @@ class Solution
         
     Node *cur = root;
     Node *head = NULL;
-    Node *parent = NULL;
+    Node *curPrev = NULL;
     
     while(cur){
-        //cout << cur->data << endl;
+        
         if(!cur->left){
-            //cout << " if"<<endl;
-            if(!head) head = cur;
-            else parent->right = cur;
-            cur->left = parent;
-            parent = cur;
-            cur = cur->right;
+           if(!head) head = cur;
+           
+           //Making links
+           cur->left = curPrev;
+           if(curPrev) curPrev->right = cur;
+           curPrev= cur;
+           cur = cur->right;
         }else{
-            //cout << " else"<<endl;
             Node *prev = cur->left;
             while(prev->right && prev->right != cur) prev = prev->right;
             
@@ -133,8 +133,11 @@ class Solution
                 prev->right = cur;
                 cur = cur->left;
             }else{
-                cur->left = prev;
-                parent = cur;
+                
+                //Making links
+                cur->left = curPrev;
+                curPrev->right = cur;
+                curPrev = cur;
                 cur = cur->right;
             }
         }
