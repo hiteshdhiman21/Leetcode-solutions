@@ -14,12 +14,11 @@ public:
         if(mx_heap.size() == 0 || num < mx_heap.top()) mx_heap.push(num);
         else mn_heap.push(num);
         
+        //Now below 2 if statements are just maintaining order and size of both the heaps
         if(mx_heap.size() > mn_heap.size()+1){
             mn_heap.push(mx_heap.top());
             mx_heap.pop();
-        }
-        
-        if(mx_heap.size() < mn_heap.size()){
+        }else if(mx_heap.size() < mn_heap.size()){
             mx_heap.push(mn_heap.top());
             mn_heap.pop();
         }
