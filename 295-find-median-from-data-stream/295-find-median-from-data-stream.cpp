@@ -11,32 +11,19 @@ public:
     MedianFinder() {}
     
     void addNum(int num) {
-        if(mx_heap.size() == mn_heap.size()){
-            if(mx_heap.size() == 0 || mn_heap.top() >= num)
-                //[[1, 4] [7, 10]] to [[1, 4, 6] [7, 10]]           Inserting 6
-                //[[1, 4] [7, 10]] to [[1, 2, 4] [7, 10]]           Inserting 2
-                //[[1, 4] [7, 10]] to [[1, 4, 7] [7, 10]]           Inserting 7
-                mx_heap.push(num);
-            else{
-                //[[1, 4] [7, 10]] to [[1, 4, 7] [9, 10]]           Inserting 9
-                //[[1, 4] [7, 10]] to [[1, 4, 7] [10, 11]]          Inserting 11
-                mx_heap.push(mn_heap.top());
-                mn_heap.pop();
-                mn_heap.push(num); 
-            }
-        }else{
-            if(num < mx_heap.top()){
-                //[[1, 3, 5] [7, 10]] to [[1, 3, 4] [5, 7, 10]]     Inserting 4
-                //[[1, 3, 5] [7, 10]] to [[1, 2, 3] [5, 7, 10]]     Inserting 2
-                mn_heap.push(mx_heap.top());
-                mx_heap.pop();
-                mx_heap.push(num);
-            }else{
-                //[[1, 3, 5] [7, 10]] to [[1, 3, 5] [5, 7, 10]]     Inserting 5
-                //[[1, 3, 5] [7, 10]] to [[1, 3, 5] [7, 10, 20]]    Inserting 20
-                mn_heap.push(num);
-            }
+        if(mx_heap.size() == 0 || num < mx_heap.top()) mx_heap.push(num);
+        else mn_heap.push(num);
+        
+        if(mx_heap.size() > mn_heap.size()+1){
+            mn_heap.push(mx_heap.top());
+            mx_heap.pop();
         }
+        
+        if(mx_heap.size() < mn_heap.size()){
+            mx_heap.push(mn_heap.top());
+            mn_heap.pop();
+        }
+        
     }
     
     double findMedian() {
