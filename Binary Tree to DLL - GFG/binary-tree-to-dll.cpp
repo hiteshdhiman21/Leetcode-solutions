@@ -117,7 +117,7 @@ class Solution
     
     while(cur){
         
-        if(!cur->left){
+        if(!cur->left){ //Working phase of Morris traversal
            if(!head) head = cur;
            
            //Making links
@@ -129,11 +129,12 @@ class Solution
             Node *prev = cur->left;
             while(prev->right && prev->right != cur) prev = prev->right;
             
-            if(prev->right != cur){
+            if(prev->right != cur){ //Non-Working phase of Morris traversal
                 prev->right = cur;
                 cur = cur->left;
-            }else{
+            }else{  //Working phase of Morris traversal
                 
+                prev->right = NULL;
                 //Making links
                 cur->left = curPrev;
                 curPrev->right = cur;
