@@ -22,38 +22,34 @@ public:
 class Solution {
 public:
     Node* cloneGraph(Node* node) {
-        queue<Node*> q;
-        
-        Node *cloneHead = NULL;
-        
-        unordered_map<int, Node*> m;
+        //Step-1. Just do Normal BFS and before pushing any node into the queue just make its clone(if the clone is not present) and do mapping of {original, clone} nodes.
+        //Step-2. For every node o, if it have o1, o2, o3 neighbours. make mp[o] have mp[o1], mp[o2], mp[o3] as neigbours.
+        //Step-3. If any node is visited before or is pushed into the queue anytime before. It means that its clone is already made and mapped and hence no need to make it again. i.e, clone is created at time of marking visiting that node.
+        //Step-4. return mp[node]
+        queue<Node*> q;        
+        unordered_map<Node*, Node*> mp;
         
         if(node){
             q.push(node);
-            cloneHead = new Node(node->val);
-            m[node->val] = cloneHead;
+            mp[node] = new Node(node->val);
         }
          
         while(!q.empty()){
-            Node *cur = q.front(); q.pop();
-            Node *cloneCur = m[cur->val];           
+            Node *cur = q.front(); q.pop();          
             
             for(auto x:cur->neighbors){
-                Node *clone;
-                if(m.count(x->val)) clone = m[x->val];
-                else clone = new Node(x->val);
-                
-                cloneCur->neighbors.push_back(clone);
-                if(!m.count(x->val)){
+                if(!mp.count(x)){
+                    mp[x] = new Node(x->val);
                     q.push(x);
-                    m[x->val] = clone;
                 }
                 
+                mp[cur]->neighbors.push_back(mp[x]);
             }          
         }
         
-        return cloneHead;
+        return mp[node];
     }
+    
     //T - O(V+E)
     //S - O(V)
 };
