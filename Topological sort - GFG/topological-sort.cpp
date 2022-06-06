@@ -8,6 +8,10 @@ class Solution
 	public:
 	
 	void dfsTopo(int cur, vector<int> adj[], vector<bool> &vis, stack<int> &st){
+	    //No need to worry about wrong placing of nodes
+	    //Because for node -> all the connected nodes, all the connected nodes will be pushed into stack before
+	    //  the node visiting them. Hence the node will be above all the connected nodes.
+	    //And for the non-directionaly connected nodes, no need to worry about their placing wrt to these connected nodes.
 	    vis[cur] = true;
 	    
 	    for(int x: adj[cur]){
@@ -19,7 +23,7 @@ class Solution
 	
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    
+	    //Topo sort: if u->v an edge is present, then in topological sort u must come before v.
 	    stack<int> st;
 	    vector<bool> vis(V, false);
 	    
