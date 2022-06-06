@@ -6,43 +6,37 @@ using namespace std;
 class Solution
 {
 	public:
-	
-	void dfsTopo(int cur, vector<int> adj[], vector<bool> &vis, stack<int> &st){
-	    //No need to worry about wrong placing of nodes
-	    //Because for node -> all the connected nodes, all the connected nodes will be pushed into stack before
-	    //  the node visiting them. Hence the node will be above all the connected nodes.
-	    //And for the non-directionaly connected nodes, no need to worry about their placing wrt to these connected nodes.
-	    vis[cur] = true;
-	    
-	    for(int x: adj[cur]){
-	        if(!vis[x]) dfsTopo(x, adj, vis, st);
-	    }
-	    
-	    st.push(cur);
-	}
-	
+	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    //Topo sort: if u->v an edge is present, then in topological sort u must come before v.
-	    stack<int> st;
-	    vector<bool> vis(V, false);
-	    
-	    for(int i=0; i<V; i++){
-	        if(!vis[i])
-	            dfsTopo(i, adj, vis, st);
+	    //Intuition: We will first push all the nodes with inDegree[0] and then we will push any
+	    //      vertex only whose dependant upon vertices has already been pushed.
+	    //In this way every v vertex with some edge u->v, will be pushed after u.
+	    //Kahn's algorithm
+	    vector<int> inDegree(V);
+	    for(int u=0; u<V; u++){
+	        for(int v:adj[u]) inDegree[v]++;
 	    }
 	    
+	    queue<int> q;
+	    for(int i=0; i<V; i++){
+	        if(inDegree[i] == 0) q.push(i);
+	    }
+	 
 	    vector<int> topo;
-	    while(!st.empty()){
-	        topo.push_back(st.top());
-	        st.pop();
+	    while(!q.empty()){
+	        int cur = q.front(); q.pop();
+	        topo.push_back(cur);
+	        for(int x:adj[cur]){
+	            inDegree[x]--;
+	            if(inDegree[x] == 0) q.push(x);
+	        }
 	    }
 	    
 	    return topo;
 	}
 	//T - O(V+E)
-	//S - O(2V)
-	//AS - O(V)
+	//S - O(V)
 };
 
 // { Driver Code Starts.
