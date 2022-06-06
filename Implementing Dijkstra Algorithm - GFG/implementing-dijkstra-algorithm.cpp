@@ -10,15 +10,23 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {   
+        //Greedy algorithm:
+        //Step-1. Push the Source node into priority queue with dist 0.
+        //Step-2. While q is not empty, take out the min dist node from the q. (As, its distance now
+        //          can't be minimized by other nodes. And it can minimize others distance). 
+        //Step-3. Compare the original dist of its neighbours with or without it inclusion. If
+        //        with its inclusion the distance is less, then update it and push the new dist
+        //        into the queue.
+        //Step-4. Finally return the minDist vector.
+        
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int, int>>> pq;
         vector<int> distTo(V, 1e6+5);
         distTo[S] = 0;
         pq.push({0, S});
-        
-        for(int i=1; i<V; i++){
-            
-            while(pq.top().first > distTo[pq.top().second]) pq.pop();
-            
+         
+        //Used pq to find min distanced nodes out of the remaining nodes. We can also use find MinVertex
+        //function as in CN course.
+        while(!pq.empty()){       
             int curDist = pq.top().first;
             int cur = pq.top().second;
             pq.pop();
@@ -32,8 +40,9 @@ class Solution
         }
         
         return distTo;
-        
     }
+    //T - O(V*V)
+    //S - O(V)
 };
 
 
