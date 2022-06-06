@@ -1,10 +1,12 @@
 class Solution {
 public:
     
+    vector<int> dx = {-1, 1, 0, 0};
+    vector<int> dy = {0, 0, -1, 1};
+    
     //Can also use DFS
-    void bfs(vector<vector<char>>& grid, int sr, int sc){
-        vector<int> dx({-1, 1, 0, 0});
-        vector<int> dy({0, 0, -1, 1});
+    void bfs(vector<vector<char>>& grid, int& sr, int& sc){
+        
         
         queue<pair<int, int>> q;
         q.push({sr, sc});
