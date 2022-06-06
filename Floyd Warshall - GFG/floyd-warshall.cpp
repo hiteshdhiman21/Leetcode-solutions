@@ -10,9 +10,10 @@ using namespace std;
 class Solution {
   public:
 	void shortest_distance(vector<vector<int>>& dist){
+	    //Relaxing every edge between u and v V times using V different intermediate vertices
 	    int V = dist.size();
 	    
-	    for(int w = 0; w<V; w++){
+	    for(int w = 0; w<V; w++){ //V times with V different intermediate vertices
 	        for(int u = 0; u < V; u++){
 	            for(int v = 0; v < V; v++){
 	                if(dist[u][w] != -1 && dist[w][v] != -1 && (dist[u][v] == -1 || dist[u][v] > dist[u][w]+dist[w][v]))
