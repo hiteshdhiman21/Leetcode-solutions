@@ -7,7 +7,6 @@ public:
     //Can also use DFS
     void bfs(vector<vector<char>>& grid, int& sr, int& sc){
         
-        
         queue<pair<int, int>> q;
         q.push({sr, sc});
         
@@ -27,6 +26,8 @@ public:
     }
     
     int numIslands(vector<vector<char>>& grid) {
+        //No need to use visited. Modify grid's 1 to 0 inplace
+        //Just Find the the total no. of connected components using BFS or DFS
         int cnt = 0;
         for(int i =0; i<grid.size(); i++){
             for(int j=0; j<grid[0].size(); j++){
