@@ -1,33 +1,29 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        //Step-1. First make a hashmap of each element with its frequency.
-        //Step-2. Now maintain a minHeap and iterate over the hashmap. If minHeap size < k just push the {cnt, x} into the minHeap. Else check if minHeap minFreq < cnt and if true, just push the {cnt, x} into the queue.
-        //Step-3. Finally just add the value part of minHeap into the ans vector.
+        //Approach: Bucket sort
+        //Step-1. We will make a bucket for each freq. Where Bucket[freq] will store all those elements having frequency = freq.
+        //Step-2. First convert the given array into a frequency based hashmap. And then travel freqMap to push elements into the bucket of corresponding frequency.
+        //Step-3. Now visit all the freq buckets, from the highest freq till the lowest and keep adding elements into the ans vector from the buckets until the ans vector reaches size k.
         
-        priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        
+        int n = nums.size();
         unordered_map<int, int> freq;
         for(int x:nums) freq[x]++;
         
+        vector<vector<int>> bucketOfFreq(n+1);
         for(auto __:freq){
             int x = __.first, cnt = __.second;
-            if(pq.size() != k){
-                pq.push({cnt, x});
-            }else if(pq.top().first < cnt){
-                pq.pop();
-                pq.push({cnt, x});
-            }
+            bucketOfFreq[cnt].push_back(x);
         }
         
         vector<int> ans;
-        while(!pq.empty()){
-            ans.push_back(pq.top().second);
-            pq.pop();
+        for(int Freq = n; Freq>=1; Freq--){
+            for(int x:bucketOfFreq[Freq]) ans.push_back(x);
+            if(ans.size() == k) break;
         }
-        
+             
         return ans;
     }
-    //T - O(nlogk)
+    //T - O(n)
     //S - O(n)
 };
