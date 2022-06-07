@@ -1,6 +1,9 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
+        //Step-1. First make a hashmap of each element with its frequency.
+        //Step-2. Now maintain a minHeap and iterate over the hashmap. If minHeap size < k just push the {cnt, x} into the minHeap. Else check if minHeap minFreq < cnt and if true, just push the {cnt, x} into the queue.
+        //Step-3. Finally just add the value part of minHeap into the ans vector.
         
         priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
         
