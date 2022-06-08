@@ -93,5 +93,7 @@ public:
         
         return maxProd;
     }
+    //T - O(n)
+    //S - O(1)
     
 };
