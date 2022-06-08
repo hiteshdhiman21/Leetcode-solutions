@@ -75,20 +75,20 @@ public:
     
     int maxProduct(vector<int>& nums) {
         //Intuition: Min possible product can become max possible product (if multiplied with negative element) and max possible product will stay max (if multiplied with positive element)
-        //Step-1. Maintain 2 variable maxSub and minSub for max and min subarray products.
-        //Step-2. Start from the first index and if 
+        //Just see the code
+        //maxSub denote the possible maxSub and minSub if it is neccesary to pick up nums[i].
+        //case 1: nums[i] < 0: Then maxSub will become the minimum possible subarray product till that element if it is necessary to take nums[i] and minSub will become maximum possible subarray product.
+        //case 2: nums[i] > 0: Then maxSub will become the maximum possible subarray product till that element if it is necessary to take nums[i] and minSub will become minimum possible subarray product.
         int minSub = 1, maxSub = 1;
         int maxProd = INT_MIN;
         
         for(int i =0; i<nums.size(); i++){
-            minSub = minSub>=0?nums[i]:minSub*nums[i];
-            maxSub = maxSub<=0?nums[i]:maxSub*nums[i];
+            minSub = minSub>=0?nums[i]:minSub*nums[i]; //If minSub >= 0, then maxSub will be greater than that and so minSub only acquire negative nums[i] while maxSub acquire some bigger negative value. so, that bigger negative value will be transferred in step3 to minSub. And maxSub will get some lesser negative value after that step3.
+            maxSub = maxSub<=0?nums[i]:maxSub*nums[i];//If maxSub <= 0, then it will be better to take nums[i] only as it is greater negative value at this point. minSub will be lesser negative or positive after this point. So the swapping will occur in step-3. And maxSub will become greater  and minSub will become lesser after that.
             
             if(minSub > maxSub) swap(minSub, maxSub);
             
-            
             maxProd = max(maxProd, maxSub);
-            
         }
         
         return maxProd;
