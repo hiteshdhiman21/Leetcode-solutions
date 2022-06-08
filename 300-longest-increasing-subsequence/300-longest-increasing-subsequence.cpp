@@ -69,25 +69,18 @@ public:
     */
     
     int lengthOfLIS(vector<int>& nums) {
-        
-        //Tabulation of best type
-        //dp[ind] store maximum length subsequence ending with nums[ind].
-        
-        int n = nums.size();
-        vector<int> dp(n, 1);
-        
-        for(int ind =0; ind<n; ind++){
-            for(int prevInd = ind-1; prevInd>=0; prevInd--){
-                if(nums[prevInd] < nums[ind]) //nums[ind] can attach after nums[prevInd]
-                    dp[ind] = max(dp[ind], dp[prevInd]+1);
+       
+        vector<int> lis;
+        for(int x:nums){
+            if(lis.size() == 0 || lis.back() < x)
+                lis.push_back(x);
+            else{
+                int ind = lower_bound(lis.begin(), lis.end(), x)-lis.begin();
+                lis[ind] = x;
             }
         }
-       
-        int maxLen = 0;
-        for(auto len: dp)
-            maxLen = max(len, maxLen);
         
-        return maxLen;
+       return lis.size();
     }
     //T - O(n^2)
     //S - O(n)
