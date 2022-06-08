@@ -69,7 +69,13 @@ public:
     */
     
     int lengthOfLIS(vector<int>& nums) {
-       
+/*Best solution for LIS using Binary search (But we can't derive the sequence)
+Here lis will not store the original sequence. 
+Every itertation we will do lis[ind] = x to make lis elements value small and increasing so that in future it can convert into a new sequence of same size with less values and it might give a chance to increase length of the sequence by inserting some small element(greater than the last element) at last. 
+
+case : 4 7 5 6 1 3 4 7
+       4, 4 7, 4 5, 4 5 6, 1 5 6, 1 3 6, 1 3 4, 1 3 4 7
+    */
         vector<int> lis;
         for(int x:nums){
             if(lis.size() == 0 || lis.back() < x)
@@ -82,6 +88,6 @@ public:
         
        return lis.size();
     }
-    //T - O(n^2)
+    //T - O(nlogn)
     //S - O(n)
 };
