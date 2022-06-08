@@ -71,12 +71,14 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         
         //Tabulation of best type
+        //dp[ind] store maximum length subsequence ending with nums[ind].
+        
         int n = nums.size();
         vector<int> dp(n, 1);
         
         for(int ind =0; ind<n; ind++){
             for(int prevInd = ind-1; prevInd>=0; prevInd--){
-                if(nums[prevInd] < nums[ind]) 
+                if(nums[prevInd] < nums[ind]) //nums[ind] can attach after nums[prevInd]
                     dp[ind] = max(dp[ind], dp[prevInd]+1);
             }
         }
