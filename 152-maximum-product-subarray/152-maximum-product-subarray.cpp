@@ -49,7 +49,7 @@ public:
         return ans;
     }*/
     
-    int maxProduct(vector<int>& nums) {
+    /*int maxProduct(vector<int>& nums) {
         //Fact: For a subarray containing only integer values except 0, the max product can be its suffix or prefix (Ofcourse full array can be termed as suffix and prefix) only.(Take 2 to 3 cases)
         //Step-1. Iterate over the array from starting and ending and maintain two products prefProd and suffProd respectively.
         //Step-2. While nums[i] != 0, keep multiplying prefProd with the nums[i] and similary do with the suffProd.
@@ -71,5 +71,27 @@ public:
     }
     //T - O(n)
     //S - O(1)
+    */
+    
+    int maxProduct(vector<int>& nums) {
+        int minSub = 1, maxSub = 1;
+        int maxProd = INT_MIN;
+        
+        for(int i =0; i<nums.size(); i++){
+            minSub = minSub>1?nums[i]:minSub*nums[i];
+            maxSub = maxSub<1?nums[i]:maxSub*nums[i];
+            
+            if(minSub > maxSub) swap(minSub, maxSub);
+            
+            
+            maxProd = max(maxProd, maxSub);
+            
+            minSub = minSub==0?1:minSub;
+            maxSub = maxSub==0?1:maxSub;
+            
+        }
+        
+        return maxProd;
+    }
     
 };
