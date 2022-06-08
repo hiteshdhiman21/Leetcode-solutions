@@ -74,20 +74,20 @@ public:
     */
     
     int maxProduct(vector<int>& nums) {
+        //Intuition: Min possible product can become max possible product (if multiplied with negative element) and max possible product will stay max (if multiplied with positive element)
+        //Step-1. Maintain 2 variable maxSub and minSub for max and min subarray products.
+        //Step-2. Start from the first index and if 
         int minSub = 1, maxSub = 1;
         int maxProd = INT_MIN;
         
         for(int i =0; i<nums.size(); i++){
-            minSub = minSub>1?nums[i]:minSub*nums[i];
-            maxSub = maxSub<1?nums[i]:maxSub*nums[i];
+            minSub = minSub>=0?nums[i]:minSub*nums[i];
+            maxSub = maxSub<=0?nums[i]:maxSub*nums[i];
             
             if(minSub > maxSub) swap(minSub, maxSub);
             
             
             maxProd = max(maxProd, maxSub);
-            
-            minSub = minSub==0?1:minSub;
-            maxSub = maxSub==0?1:maxSub;
             
         }
         
