@@ -33,10 +33,17 @@ class Solution
     
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-        //Original dp
+        //Optimised space dp
+        /*Use only 1 array. Because dp[ind][w] depends on dp[ind+1][w] and dp[ind+1][w-wt[ind]] so dp[ind]
+        values only depends upon dp[ind+1] values. i.e. why we only need dp[ind+1] array to construct dp[ind]
+        So, we can do that using only 1 array. dp[w]ci = dp[w]pi and dp[w]ci = dp[w-wt[ind]] pi by iterating
+        in decreasing value of weight.
+        */
+        
         vector<int> dp(W+1, 0);
         
         for(int ind = n-1; ind>=0; ind--){
+            //Iterate in this direction
             for(int w = W; w >= 0; w--){
                //Not take
                if(ind+1 < n) dp[w] = dp[w];
@@ -53,6 +60,8 @@ class Solution
         
         return dp[W];
     }
+    //T - O(n*W)
+    //S - O(n)
 };
 
 // { Driver Code Starts.
