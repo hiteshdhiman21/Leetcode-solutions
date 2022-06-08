@@ -28,7 +28,7 @@ public:
     */
     
     /*int lengthOfLIS(vector<int>& nums) {
-        
+        //Tabulation unoptimized
         int n = nums.size();
         vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
         
@@ -47,8 +47,9 @@ public:
     //S - O(n^2)
     */
     
-    int lengthOfLIS(vector<int>& nums) {
+    /*int lengthOfLIS(vector<int>& nums) {
         
+        //Space optimized tabulation
         int n = nums.size();
         vector<vector<int>> dp(2, vector<int>(n+1, 0));
         
@@ -63,4 +64,29 @@ public:
         
         return dp[0%2][0];
     }
+    //T - O(n^2)
+    //S - O(2n)
+    */
+    
+    int lengthOfLIS(vector<int>& nums) {
+        
+        //Tabulation of best type
+        int n = nums.size();
+        vector<int> dp(n, 1);
+        
+        for(int ind =0; ind<n; ind++){
+            for(int prevInd = ind-1; prevInd>=0; prevInd--){
+                if(nums[prevInd] < nums[ind]) 
+                    dp[ind] = max(dp[ind], dp[prevInd]+1);
+            }
+        }
+       
+        int maxLen = 0;
+        for(auto len: dp)
+            maxLen = max(len, maxLen);
+        
+        return maxLen;
+    }
+    //T - O(n^2)
+    //S - O(n)
 };
