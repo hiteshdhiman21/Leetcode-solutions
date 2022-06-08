@@ -27,7 +27,7 @@ public:
     //S - O(n^2)
     */
     
-    int lengthOfLIS(vector<int>& nums) {
+    /*int lengthOfLIS(vector<int>& nums) {
         
         int n = nums.size();
         vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
@@ -45,4 +45,22 @@ public:
     }
     //T - O(n^2)
     //S - O(n^2)
+    */
+    
+    int lengthOfLIS(vector<int>& nums) {
+        
+        int n = nums.size();
+        vector<vector<int>> dp(2, vector<int>(n+1, 0));
+        
+        for(int ind = n-1; ind >=0; ind--){
+            for(int prevInd = ind-1; prevInd >= -1; prevInd--){
+                int len = dp[(ind+1)%2][prevInd+1]; //Leaving it
+                if(prevInd == -1 || nums[prevInd] < nums[ind]) 
+                    len = max(len, 1+dp[(ind+1)%2][ind+1]); //Taking it
+                dp[ind%2][prevInd+1] = len;
+            }
+        }
+        
+        return dp[0%2][0];
+    }
 };
