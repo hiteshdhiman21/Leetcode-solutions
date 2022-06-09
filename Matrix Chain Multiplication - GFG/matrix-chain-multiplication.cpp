@@ -27,6 +27,18 @@ public:
     
     int matrixMultiplication(int N, int arr[])
     {
+        /*
+        len -> no. of matrices.  i ->  first matrix.   j ->  last matrix
+        For any ith matrix M[i] -> arr[i-1] and arr[i] are its dimensions
+        */
+        
+        /*
+        Step-1. For len = 1, set all possible dp[i][j] = 0; 
+        Step-2. Now start calculating in increasing order of len . Because dp[len] depends on dp[some smaller len]. Start k from i till j-1. Because k
+                is the partition index. M[i]*M[i+1]*****M[k]*M[k+1]*M[k+2]***M[j]. so dp[i][j] = min(dp[i][k]+dp[k][j]+arr[i-1]*arr[k]*arr[j]).
+                where partitioning is like  M[i]*M[i+1]*****M[k]  and M[k+1]*M[k+2]***M[j] or(arr[i-1, i, ...., k] and arr[k+1, .....j]).
+        Step-3. Finally return dp[1][N-1]. Because there are total N-1 matrices.
+        */
         vector<vector<int>> dp(N, vector<int> (N, 0));
         
         for(int len = 2; len <= N-1; len++){
