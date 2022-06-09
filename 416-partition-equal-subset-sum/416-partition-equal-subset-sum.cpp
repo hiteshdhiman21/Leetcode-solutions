@@ -27,9 +27,9 @@ public:
     //T - O(n*TotalSum)
     //S - O(n*TotalSum)*/
     
-    bool canPartition(vector<int>& nums) {
+    /*bool canPartition(vector<int>& nums) {
         //Using only 1-D array, trick learnt in CodeForces time.
-        /*Taking or Not-taking both are considered. Not taking as we are not resetting old values. Taking as if for nums[ind] = x, some sum-x is already possible, then sum is also possibly by taking x.*/
+        Taking or Not-taking both are considered. Not taking as we are not resetting old values. Taking as if for nums[ind] = x, some sum-x is already possible, then sum is also possibly by taking x.
         
         int sum = 0;
         for(int x:nums) sum+= x;
@@ -51,5 +51,27 @@ public:
         return isPos[req];
     }
     //T - O(n*TotalSum)
-    //S - O(TotalSum)
+    //S - O(TotalSum)*/
+
+    bool canPartition(vector<int>& nums) {
+        
+        int sum = 0;
+        for(int x:nums) sum+= x;
+        
+        if(sum%2 == 1) return false;
+        
+        int n = nums.size();
+        
+        vector<vector<bool>> dp(n+1, vector<bool>(sum+1, 0));
+        dp[n][0] = 1;
+        for(int i = n-1; i>=0; i--){
+            for(int s = 0; s<= sum; s++){
+                dp[i][s] = dp[i+1][s];
+                if(s >= nums[i])
+                dp[i][s] = dp[i][s] | dp[i+1][s-nums[i]];
+            }
+        }
+
+        return dp[0][sum/2];
+    }
 };
