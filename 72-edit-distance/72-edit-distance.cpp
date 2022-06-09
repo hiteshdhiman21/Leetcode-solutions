@@ -57,8 +57,7 @@ public:
     }*/
     
     int minDistance(string word1, string word2) {
-        if(word1.size() == 0 || word2.size() == 0) return max(word1.size(), word2.size());
-        
+              
         int m = word1.size(), n = word2.size();
         
         vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
