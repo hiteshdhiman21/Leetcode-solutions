@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    /*
     bool canFindSum(vector<int>& nums, int ind, int req, vector<vector<int>>& dp){
         if(ind == nums.size()){
             return req==0;
@@ -25,5 +25,27 @@ public:
         return canFindSum(nums, 0, sum/2, dp);
     }
     //T - O(n*TotalSum)
-    //S - O()
+    //S - O(n*TotalSum)*/
+    
+    bool canPartition(vector<int>& nums) {
+        int sum = 0;
+        for(int x:nums) sum+= x;
+        
+        if(sum%2 == 1) return false;
+        
+        int req = sum/2;
+        
+        vector<bool> isPos(req+1);
+        isPos[0] = true;
+        
+        for(int x:nums){
+            for(sum = req-x; sum >= 0; sum--){
+                isPos[sum+x] = isPos[sum+x] || isPos[sum];
+            }
+        }
+        
+        return isPos[req];
+    }
+    //T - O(n*TotalSum)
+    //S - O(TotalSum)
 };
