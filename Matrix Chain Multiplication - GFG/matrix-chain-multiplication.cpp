@@ -27,8 +27,23 @@ public:
     
     int matrixMultiplication(int N, int arr[])
     {
-        vector<vector<int>> dp(N, vector<int> (N, -1));
-        return solve(1, N-1, arr, dp);
+        vector<vector<int>> dp(N, vector<int> (N, 0));
+        
+        for(int len = 2; len <= N-1; len++){
+            for(int i = 1; i<=N-len; i++){
+                int j = i+len-1;
+                
+                int mn = INT_MAX;
+                for(int k = i; k <= j-1; k++){
+                    int mulOuter = arr[i-1]*arr[k]*arr[j];
+                    int mulInner = dp[i][k] + dp[k+1][j];
+                    mn = min(mn, mulOuter+mulInner);
+                }
+                dp[i][j] = mn;
+            }
+        }
+        
+        return dp[1][N-1];
     }
 };
 
