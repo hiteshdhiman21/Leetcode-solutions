@@ -58,7 +58,7 @@ public:
     
     int minDistance(string word1, string word2) {
     /*  Step-1. dp[i][j] denotes the min Distance if word1 starts from index i(m-1 character) and word2 starts from index j(n-j characters)
-        Step-2. if word1[i] == word2[j], dp[i][j] = dp[i+1][j+1] because no need to match word1[i] and word2[j].
+        Step-2. if word1[i] == word2[j], then it is Optimal to do dp[i][j] = dp[i+1][j+1] because no need to match word1[i] and word2[j]. Tried on several cases.
         Step-3. Else, three ways to match word1[i] each costs 1 operations. 
         Insertion: Insert word2[j] in word1 and Now word2[j] is matched. So find dist word1[i...m] with word2[j+1 ... n] i.e. Find dp[i][j+1].
         Deletion: Delete word1[i] and since no need to match word[i] now. So find dist word1[i+1...m] with word2[j ... n] i.e. Find dp[i+1][j].
