@@ -57,7 +57,15 @@ public:
     }*/
     
     int minDistance(string word1, string word2) {
-              
+    /*  Step-1. dp[i][j] denotes the min Distance if word1 starts from index i(m-1 character) and word2 starts from index j(n-j characters)
+        Step-2. if word1[i] == word2[j], dp[i][j] = dp[i+1][j+1] because no need to match word1[i] and word2[j].
+        Step-3. Else, three ways to match word1[i] each costs 1 operations. 
+        Insertion: Insert word2[j] in word1 and Now word2[j] is matched. So find dist word1[i...m] with word2[j+1 ... n] i.e. Find dp[i][j+1].
+        Deletion: Delete word1[i] and since no need to match word[i] now. So find dist word1[i+1...m] with word2[j ... n] i.e. Find dp[i+1][j].
+        Replace: Replace word1[i] with word2[j]. So find dist word1[i+1...m] with word2[j+1 ... n] i.e. Find dp[i+1][j+1].
+        Step-4. Finally return dp[0][0] i.e. dist between word1[0..m] and word2[0..n].
+        */
+        
         int m = word1.size(), n = word2.size();
         
         vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
@@ -80,5 +88,7 @@ public:
         
         return dp[0][0];
     }
+    //T - O(m*n)
+    //S - O(m*n)
    
 };
