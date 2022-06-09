@@ -68,20 +68,17 @@ public:
         
         int m = word1.size(), n = word2.size();
         
-        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+        vector<vector<int>> dp(2, vector<int>(n+1, 0));
         
         for(int j=0; j<=n; j++){
-            dp[m][j] = abs(n-j);
+            dp[m%2][j] = n-j;
         }
-        
-        for(int i=0; i<=m; i++){
-            dp[i][n] = abs(m-i);
-        }
-        
+        //No need for second for loop. Because that work is already happening for every i in the 78 line.        
         for(int i = m-1; i>=0; i--){
+            dp[i%2][n] = m-i;
             for(int j = n-1; j>=0; j--){
-                if(word1[i] == word2[j]) dp[i][j] = dp[i+1][j+1];
-                else dp[i][j] = min(dp[i+1][j+1], min(dp[i][j+1], dp[i+1][j]))+1;
+                if(word1[i] == word2[j]) dp[i%2][j] = dp[(i+1)%2][j+1];
+                else dp[i%2][j] = min(dp[(i+1)%2][j+1], min(dp[i%2][j+1], dp[(i+1)%2][j]))+1;
             }
         }
        
