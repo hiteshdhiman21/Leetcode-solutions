@@ -30,37 +30,31 @@ public:
         for(int f=1; f<=k; f++) dp[1][f] = f;
         for(int e=1; e<=n; e++) dp[e][1] = 1;
         
+        
+        
         for(int e=2; e<=n; e++){
+            int cur_opt_edf = 1;
             for(int f=2; f<=k; f++){
-                //Using binary search to find the Best out of Worst
-                int botw = INT_MAX;
+            /*As cur_opt_edf only going to increase or stay same with increase in f. So, just starting finding optimal edf from the same cur_opt_edf  and resetting it only if the floors are also resset*/
+            
+                int botw = 1e6;
                 
-                int start = 1;
-                int end = f;
-                
-                while(start <= end){
-                    int edf = start+(end-start)/2;
-                    int belowAns = dp[e-1][edf-1]; //It increases with edf as no. of floors increases
-                    int aboveAns = dp[e][f-edf]; //It decreases with edf as no. of floors decreases
+                int edf;
+                for(edf = cur_opt_edf; edf <= f; edf++){
+                    int belowAns = dp[e-1][edf-1];
+                    int aboveAns = dp[e][f-edf];
                     
-                    if(belowAns < aboveAns){
-                        botw = aboveAns;
-                        start = edf+1; 
-                    }else if(belowAns > aboveAns){
-                        botw = belowAns;
-                        end = edf-1; 
-                    }else{
-                        botw =belowAns;
-                        break;
-                    }
+                    if(botw > max(belowAns, aboveAns)) botw = max(belowAns, aboveAns);
+                    else break;
                 }
                 
+                cur_opt_edf = edf-1;
                 dp[e][f] = botw+1;
             }
         }
     
         return dp[n][k];
     }
-    //T - O(n*k*log(k))
+    //T - O(n*k)
     //S - O(n*k)
 };
