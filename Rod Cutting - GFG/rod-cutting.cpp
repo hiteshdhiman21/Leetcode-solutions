@@ -13,6 +13,11 @@ class Solution{
 
     
     int cutRod(int price[], int n) {
+        /*Use DP to calculate optimal cutting for each length
+        Step-1. set dp[0] = 0.
+        Step-2. for each len, calculate optimal cutting dp[len] using optimal cutting for smaller parts. for each dp[part1] , dp[len-part1] 
+                whichever gives the max sum, optimal cutting is those part1 and part2 for that len.
+        Step-3. Finally return dp[n]*/
         
         vector<int> dp(n+1, 0);
         
@@ -26,6 +31,8 @@ class Solution{
         
         return dp[n];
     }
+    //T - O(n)
+    //S - O(n)
 };
 
 // { Driver Code Starts.
