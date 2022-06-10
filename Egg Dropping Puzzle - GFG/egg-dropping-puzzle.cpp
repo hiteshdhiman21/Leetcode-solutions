@@ -6,6 +6,7 @@ using namespace std;
 class Solution
 {
     public:
+    
     //Function to find minimum number of attempts needed in 
     //order to find the critical floor.
     int eggDrop(int n, int k) 
@@ -34,26 +35,27 @@ class Solution
         4. Finally return dp[e][f]
         */ 
         
-        vector<vector<int>> dp(n+1, vector<int> (k+1));
+        vector<vector<int>> dp(2, vector<int> (k+1));
         
-        for(int f=1; f<=k; f++) dp[1][f] = f;
-        for(int e=1; e<=n; e++) dp[e][1] = 1;
+        for(int f=1; f<=k; f++) dp[1%2][f] = f;
+        
         
         for(int e=2; e<=n; e++){
+            dp[e%2][1] = 1;
             for(int f=2; f<=k; f++){
                 int botw = INT_MAX;
                 for(int edf=1; edf<=f; edf++){
-                    int worst = max(dp[e-1][edf-1], dp[e][f-edf]);
+                    int worst = max(dp[(e-1)%2][edf-1], dp[e%2][f-edf]);
                     botw = min(botw, worst);
                 }
-                dp[e][f] = botw+1;
+                dp[e%2][f] = botw+1;
             }
         }
     
-        return dp[n][k];
+        return dp[n%2][k];
     }
     //T - O(nEggs*nFloors*nFloors)
-    //S - O(nEggs*nFloors)
+    //S - O(2*nFloors)
 };
 
 // { Driver Code Starts.
