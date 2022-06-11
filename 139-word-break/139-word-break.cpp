@@ -1,31 +1,33 @@
 class Solution {
 public:
-
     
-    bool wordBreak(string str, vector<string>& wordDict) {
-        //Approach: DP
-        //Intuition: Try to find substrings in the wordDictionary starting from the last.
+    bool isMatched(string& s, int& si, string &w){
+        for(int i = 0; i< w.size(); i++){
+            if(i+si == s.size() || s[i+si] != w[i]) return false;
+        }
+        return true;        
+    }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
         
-        int n = str.size(); //int m = wordDict.size()
-        unordered_set<string> wordDictMap(wordDict.begin(), wordDict.end());
+        int n = s.size();
         vector<bool> dp(n+1);
         dp[n] = true;
         
         for(int i=n-1; i>=0; i--){
-            string cur = "";
-            for(int j = i; j<= n; j++){
-                cur += str[j];
-                if(wordDictMap.count(cur)){
-                    dp[i] = dp[i+cur.size()];
-                    if(dp[i] == true) break;
+            for(string &w: wordDict){
+                
+                if(isMatched(s, i, w)){
+                    dp[i] = dp[i+w.size()];
                 }
+                
+                if(dp[i] == true) break;
             }
         }
         
         return dp[0];
     }
-    //T - O(n^3) 
-    //S - O(m*k)+O(n) , where k = avg w length
-    
+    //T - O()
+    //S - O()
     
 };
