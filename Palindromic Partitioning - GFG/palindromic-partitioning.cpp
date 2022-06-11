@@ -29,9 +29,12 @@ public:
         vector<int> dp(n+1, n);
         dp[n] = 0;
         
+        vector<vector<bool>> isPal(n, vector<bool>(n, false));
+        
         for(int i = n-1; i>=0; i--){
             for(int j=i; j<=n-1; j++){
-                if(isPal(str, i, j)){
+                if(str[i]==str[j] && (j-i<=1 || isPal[i+1][j-1])){
+                    isPal[i][j] = true;
                     dp[i] = min(dp[i], dp[j+1]+1);
                 }
             }
@@ -40,7 +43,7 @@ public:
         return dp[0]-1;
     }
     //T - O(n^2)
-    //S - O(n)
+    //S - O(n^2 + n)
 };
 
 // { Driver Code Starts.
