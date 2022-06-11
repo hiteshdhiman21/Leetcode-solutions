@@ -10,7 +10,10 @@ public:
     
     bool wordBreak(string s, vector<string>& wordDict) {
         
-        int n = s.size();
+        //Approach: DP
+        //Try to match every word in word dict with the string starting from the different indices to get a matched substring.
+        
+        int n = s.size();  //int m = wordDict.size()
         vector<bool> dp(n+1);
         dp[n] = true;
         
@@ -27,7 +30,7 @@ public:
         
         return dp[0];
     }
-    //T - O()
-    //S - O()
+    //T - O(n*m*k), where k = avg word length and m = wordDict size
+    //S - O(n)
     
 };
