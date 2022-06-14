@@ -3,34 +3,20 @@ public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         
         vector<vector<int>> res;
+        bool isInserted = false;
         for(int i = 0; i < intervals.size(); i++){
-            if(intervals[i][0] <= newInterval[0]){
+            if(newInterval[1] < intervals[i][0] && !isInserted){
+                res.push_back(newInterval);
+                res.push_back(intervals[i]);
+                isInserted = true;
+            }else if(intervals[i][1] < newInterval[0] || isInserted){
                 res.push_back(intervals[i]);
             }else{
-                int start = newInterval[0];
-                int end = newInterval[1];
-                if(res.size() > 0 && res.back()[1] >= start){
-                    start = res.back()[0];
-                    end = max(end, res.back()[1]);
-                    res.pop_back();
-                }
-                
-                res.push_back({start, end});
-                
-                while(i<intervals.size()){
-                    if(res.back()[1] >= intervals[i][0]){
-                        res.back()[1] = max(res.back()[1], intervals[i][1]);
-                    }else{
-                        res.push_back(intervals[i]);
-                    }
-                    i++;
-                }
-            
+                newInterval = {min(newInterval[0], intervals[i][0]), max(intervals[i][1], newInterval[1])};
             }
         }
         
-        if(res.size() == 0 || res.back()[1] < newInterval[0]) res.push_back(newInterval);
-        else if(res.back()[1] >= newInterval[0]) res.back()[1] = max(res.back()[1], newInterval[1]);
+        if(!isInserted) res.push_back(newInterval);
         return res;
     }
     //T - O(n)
