@@ -1,6 +1,9 @@
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
+      /*Approach: Postfix evaluation: For every operator, just apply that in previous two numeric values
+        We can use stack*/
+        
         stack<int> st;
         
         for(string& s: tokens){
@@ -28,4 +31,6 @@ public:
         
         return st.top();
     }
+    //T - O(n)
+    //S - O(n)
 };
