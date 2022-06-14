@@ -12,22 +12,21 @@
 class Solution {
 public:
     
-    bool isIdentical(TreeNode* root, TreeNode* subRoot, bool act = false){
+    bool isIdentical(TreeNode* root, TreeNode* subRoot){
         if(root == NULL && subRoot == NULL) return true;
         else if(root == NULL || subRoot == NULL) return false;
         
-        bool ans = root->val == subRoot->val && isIdentical(root->left, subRoot->left, true) && isIdentical(root->right, subRoot->right, true);
-        
-        if(!act)
-        ans = ans || isIdentical(root->left, subRoot) || isIdentical(root->right, subRoot);
-    
-        
-        return ans;             
+        return root->val == subRoot->val && isIdentical(root->left, subRoot->left) && isIdentical(root->right, subRoot->right);          
     }
     
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        return isIdentical(root, subRoot, false);  
+        if(root == NULL && subRoot == NULL) return true;
+        else if(root == NULL || subRoot == NULL) return false;
+        
+        bool ans = false;
+        return isIdentical(root, subRoot) || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+        
     }
-    //T - O(n^2)
-    //S - O(1)
+    //T - O(n1*n2)
+    //S - O(n1+n2)
 };
