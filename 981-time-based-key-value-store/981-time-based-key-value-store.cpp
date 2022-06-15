@@ -3,6 +3,7 @@
 class TimeMap {
 
     unordered_map<string, map<int, string>> m;
+    //Store in form of key -> timestamps with corresponding values so if query get(key, timestamp) occur we can find the latest prev_timestamp for a key by binary search where prev_timestamp is the greatest timestamp <= timestamp
     
 public:
     TimeMap() {
