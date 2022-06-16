@@ -8,19 +8,21 @@ class Node{
         isEnd = false;
     }
     
-    bool containsKey(char& ch){
+    bool containsKey(const char& ch){
         return this->links[ch-'a'] != NULL;
     }
     
-    void put(char &ch){
+    void put(const char &ch){
         this->links[ch-'a'] = new Node;
     }
     
-    Node* get(char &ch){
+    Node* get(const char &ch){
         return this->links[ch-'a'];
     }
 };
 
+
+//using Trie
 class WordDictionary {
 Node *root;
     
@@ -30,9 +32,10 @@ public:
         root = new Node;
     }
     
-    void addWord(string word) {
+    //As usual iterative
+    void addWord(const string&  word) {
         Node *cur = root;
-        for(char& ch: word){               
+        for(const char& ch: word){               
             if(!cur->containsKey(ch))
                 cur->put(ch);
             cur = cur->get(ch);
@@ -40,7 +43,8 @@ public:
         cur->isEnd = true;
     }
     
-    bool searchWord(string& word, int ind, Node *cur){
+    //Simple recursive solution 
+    bool searchWord(const string&  word, int ind, Node *cur){
         if(ind == word.size())
             return cur->isEnd;
         
@@ -57,7 +61,7 @@ public:
         }        
     }
     
-    bool search(string word) {
+    bool search(const string& word) {
         return searchWord(word, 0, root);
     }
     //T - O(n)
