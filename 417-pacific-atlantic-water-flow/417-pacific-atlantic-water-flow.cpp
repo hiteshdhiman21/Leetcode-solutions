@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void bfs(vector<vector<int>>& heights, vector<vector<bool>>& vis, int n, int m){
+    void bfs(vector<vector<int>>& heights, vector<vector<bool>>& vis, int& n, int& m){
         queue<pair<int,int>> q;
         
         if(vis[0][0] == true){
@@ -29,6 +29,11 @@ public:
     }
     
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        
+        //BFS 
+      /*Step-1. Using the coordinates touching Pacific(Atlantic) ocean marked them and all the other coordinates from where water can flow into the pacific(atlantic) ocean as true by using BFS.
+      /*Step-2. Now iterate on all the coordinates and for coordinates which are marked true for both the oceans(pacific and atlantic), put them into the res vector. Finally return the res vector*/
+        
         int n = heights.size(), m = heights[0].size();
         
         vector<vector<bool>> pacific(n, vector<bool> (m, false));
