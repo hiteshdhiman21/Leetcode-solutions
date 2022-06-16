@@ -26,8 +26,6 @@ Node *root;
     
 public:
     
-    
-    
     WordDictionary() {
         root = new Node;
     }
