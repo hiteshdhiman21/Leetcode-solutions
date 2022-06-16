@@ -40,24 +40,21 @@ public:
         cur->isEnd = true;
     }
     
-    bool searchWord(string& word, int ind, Node *curRoot){
-        Node *cur = curRoot;
+    bool searchWord(string& word, int ind, Node *cur){
+        if(ind == word.size())
+            return cur->isEnd;
         
-        for(int i = ind; i<word.size(); i++){
-            char ch = word[i];
-            if(ch == '.'){
-                for(char assume = 'a'; assume <= 'z'; assume++){
-                    if(cur->containsKey(assume) && searchWord(word, i+1, cur->get(assume)))
-                        return true;
-                }
-                return false;
-            }else{
-                if(!cur->containsKey(ch))
-                    return false;
-                cur = cur->get(ch);
+        if(word[ind] == '.'){
+            for(char assume = 'a'; assume <= 'z'; assume++){
+                if(cur->containsKey(assume) && searchWord(word, ind+1, cur->get(assume)))
+                    return true;
             }
-        }
-        return cur->isEnd == true;
+            return false;
+        }else{
+            if(!cur->containsKey(word[ind]))
+                return false;
+            return searchWord(word, ind+1, cur->get(word[ind]));
+        }        
     }
     
     bool search(string word) {
