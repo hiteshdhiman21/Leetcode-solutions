@@ -11,30 +11,29 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        ListNode *prev = NULL;
-        ListNode *cur = head;
-        int curNo = 1;
+      /*Reverse cur pair at one time and point the prev Pair's original first(now sec) to cur pair's original sec(now first)*/ 
+        ListNode *dummy = new ListNode(-1, head);
         
-        while(cur){
-            ListNode *next = cur->next;
+        ListNode *prev = dummy;//Prev to cur pair 
+        ListNode *cur = head;//First in cur pair
+        
+        while(cur && cur->next){
+            //Saving next pair
+            ListNode *nxtPair = cur->next->next;
             
-            if(curNo%2 == 1){
-                if(!cur->next)
-                    break;
-                cur->next = cur->next->next;
-                if(cur->next && cur->next->next)
-                    cur->next = cur->next->next;
-            }else{
-                cur->next = prev;
-                
-                if(curNo == 2)
-                    head = cur;
-            }
+            ListNode *sec = cur->next;
+            //Reversing
+            prev->next = sec; //prev pointer to cur
+            cur->next = sec->next;
+            sec->next = cur;
             
+            
+            //Updating for iteration
             prev = cur;
-            cur = next;
-            curNo++;
+            cur = nxtPair;
         }
-        return head;
+        return dummy->next;
     }
+    //T - O(n)
+    //S - O(1)
 };
