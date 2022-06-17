@@ -8,17 +8,18 @@ public:
         int n = nums.size();
         int start = 0, end = nums.size()-k;
         int toBeginFrom = -1;
-        while(start <= end){
+        
+        if(start == end)
+            toBeginFrom = start;
+        
+        while(start < end){
             int mid = start+(end-start)/2;
-            if(mid+k < n && x-nums[mid] > nums[mid+k]-x){
+            if(mid+k < n && x-nums[mid] > nums[mid+k]-x){ //mid+1 is better option than mid
                 toBeginFrom = mid+1;
                 start = mid+1;
-            }else if(mid-1 >= 0 && x-nums[mid-1] <= nums[mid+k-1]-x){
-                toBeginFrom = mid-1;
-                end = mid-1;
-            }else{
+            }else{ //mid is better option than mid+1
                 toBeginFrom = mid;
-                break;
+                end = mid;
             }
         }
         
