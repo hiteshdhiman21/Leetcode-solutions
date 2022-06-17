@@ -36,5 +36,5 @@ public:
         return res;
     }
     //T - O(nlogk)
-    //S - O(n)
+    //S - O(k)
 };
