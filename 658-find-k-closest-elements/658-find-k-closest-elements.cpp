@@ -13,9 +13,12 @@ public:
             if(mid+k < n && x-nums[mid] > nums[mid+k]-x){
                 toBeginFrom = mid+1;
                 start = mid+1;
+            }else if(mid-1 >= 0 && x-nums[mid-1] <= nums[mid+k-1]-x){
+                toBeginFrom = mid-1;
+                end = mid-1;
             }else{
                 toBeginFrom = mid;
-                end = mid-1;
+                break;
             }
         }
         
