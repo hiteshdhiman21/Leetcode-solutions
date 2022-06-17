@@ -1,6 +1,29 @@
 class Solution {
 public:
+    
     vector<int> findClosestElements(vector<int>& nums, int k, int x) {
+      /*K closest element will be next to each other in the original array
+        Step-1. Find starting point of K closest elements using binary search
+        Step-2. Copy k elements from that point into the res array and return it*/
+        int n = nums.size();
+        int start = 0, end = nums.size()-k;
+        int toBeginFrom = -1;
+        while(start <= end){
+            int mid = start+(end-start)/2;
+            if(mid+k < n && x-nums[mid] > nums[mid+k]-x){
+                toBeginFrom = mid+1;
+                start = mid+1;
+            }else{
+                toBeginFrom = mid;
+                end = mid-1;
+            }
+        }
+        
+        vector<int> res(nums.begin()+toBeginFrom, nums.begin()+toBeginFrom+k);
+        return res;
+    }
+    
+    /*vector<int> findClosestElements(vector<int>& nums, int k, int x) {
         int n = nums.size();
         vector<int> res;
         int closestIndex = -1;
@@ -43,4 +66,6 @@ public:
         
         return res;
     }
+    //T - O(k+nlogn)
+    //S - O(k)*/
 };
