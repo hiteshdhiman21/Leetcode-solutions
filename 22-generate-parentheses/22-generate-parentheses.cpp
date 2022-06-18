@@ -1,6 +1,8 @@
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
+      /*DP-Bitmasking
+        Generate all possible parenthesis combinations but add only valid ones to our res vector*/
         vector<string> res;
         for(int i = 0; i<(1<<(2*n)); i++){
             string cur = "";
