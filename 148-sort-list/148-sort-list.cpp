@@ -35,7 +35,7 @@ public:
     //S - O(1)*/
     
     ListNode *mergeSorted(ListNode *head1, ListNode *head2){
-        ListNode *head = new ListNode(0, NULL); 
+        ListNode *head = new ListNode(0, NULL);  //Dummy Node
         ListNode *tail = head;
         
         while(head1 ||  head2){
@@ -57,19 +57,24 @@ public:
         if(head == NULL || head->next == NULL) return head;
         ListNode *fast = head, *slow = head;
         
-        while(fast && fast->next && fast->next->next){
+        while(fast && fast->next && fast->next->next){ 
+            //Slow will reach to middle element in case of Odd no. of elements and First middle element in case of Even no. of elements
             fast = fast->next->next;
             slow = slow->next;
         }
         
+        //Cutting linked list into two halves
         ListNode *prevSlow = slow;
         slow = slow->next;
-        prevSlow->next = NULL;
+        prevSlow->next = NULL; 
         
+        //Passing smaller linked lists and believe in recursion to return both in a sorted manner
         head = sortList(head);
         slow = sortList(slow);
+        
+        //Finally merge both and return a full sorted linked list
         return mergeSorted(head, slow);
     }
-    //T - O(n)
+    //T - O(nlogn)
     //S - O(1)
 };
