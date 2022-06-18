@@ -10,6 +10,10 @@ public:
     }
     
     int pickIndex() {
+      /*Case: v = [0,           1,          10,         0,          20,         0,          1]
+             dp = [0,           1,          11,         11,         31,         31,         32]
+        callFor = [0,      1(0-0),    10(1-10),         0,   20(11-30),         0,      1(31)]  */
+        
         //Need to return index only
         int tot = dp.back();
         int val = (rand())%tot;
