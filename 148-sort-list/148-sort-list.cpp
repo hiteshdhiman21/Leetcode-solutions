@@ -64,9 +64,9 @@ public:
         }
         
         //Cutting linked list into two halves
-        ListNode *prevSlow = slow;
+        fast = slow;
         slow = slow->next;
-        prevSlow->next = NULL; 
+        fast->next = NULL; 
         
         //Passing smaller linked lists and believe in recursion to return both in a sorted manner
         head = sortList(head);
