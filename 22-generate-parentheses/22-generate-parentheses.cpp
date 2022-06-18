@@ -4,23 +4,23 @@ public:
         vector<string> res;
         for(int i = 0; i<(1<<(2*n)); i++){
             string cur = "";
-            int cnt = 0;
+            int balance = 0;
             for(int x = 0; x<2*n; x++){
                 if(i&(1<<x)){
                     cur += "(";
-                    cnt++;
+                    balance++;
                 }else{
                     cur += ")";
-                    cnt--;
+                    balance--;
                 }
                 
-                if(cnt < 0) break;
+                if(balance < 0 || balance > 2*n-1-x ) break;
             }
             
-            if(cnt == 0) res.push_back(cur);
+            if(balance == 0) res.push_back(cur);
         }
         return res;
     }
-    //T - O(2^(2n))
+    //T - O(n*2^(2n))
     //S - O(n)
 };
