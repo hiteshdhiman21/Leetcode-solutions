@@ -7,9 +7,9 @@ public:
       /*Approach: Dijkstra algo with some modifications
         In addition to {dist, node} also use {dist, node, stops}
         Use stops and dist array for setting a benchMark. dist[x] stores the minimum dist till now to reach x from source and stops[x] stores the no. of stops to reach x via minPath. 
-        i.e. If a new path comes with dist > preMinDist and stops > preStops[for minDist]. Then no need to choose this path.
-        Else if a new path comes with dist < preMinDist (stops not matter). Then this path can be potential ans. hence push it in the queue and update dist[x] and stops[x] for this path.
-        Else if a new path comes with dist > preMinDist but stops < preStops. Then this path can be potential ans. hence putsh it in the queue but dont update dist[x] and stops[x] for this path*/
+        i.e. If a new path comes with dist > preDist and stops > preStops. Then no need to choose this path.
+        Else if a new path comes with dist < preDist (stops not matter). Then this path can be potential ans. hence push it in the queue and update dist[x] and stops[x] for this path. i.e, set benchmarks according to minDist.
+        Else if a new path comes with dist > preMinDist but stops < preStops. Then this path can be potential ans. hence putsh it in the queue and update dist[x] and stops[x] for this path. i.e, set benchmarks according to minStops.*/
         
         
         vector<vector<pair<int,int>>> adj(n);
@@ -35,11 +35,11 @@ public:
                 int nextStops = curStops+1;
                 
                 if(nextDist < dist[x]){
-                    dist[x] = nextDist;
+                    dist[x] = nextDist;  //Setting benchmark according to minDist
                     stops[x] = nextStops; 
                     pq.push({nextDist, x, nextStops});
                 }else if(nextStops < stops[x]){
-                    dist[x] = nextDist;
+                    dist[x] = nextDist;  //Setting benchmark according to minStops
                     stops[x] = nextStops; 
                     pq.push({nextDist, x, nextStops});
                 }
@@ -47,6 +47,6 @@ public:
             
         }
         
-        return dist[dst] == INT_MAX?-1:dist[dst];        
+        return -1;        
     }
 };
