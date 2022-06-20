@@ -11,35 +11,38 @@
  */
 class Solution {
 public:
-    unordered_map<long, int> solve(TreeNode *root, int target, int& cnt){
-        if(root==NULL)
-            return {{}};
+    
+    int cnt = 0;
+    int target;
+    
+    void solve(TreeNode *root, unordered_map<long, int>& sumFreq, long& curSum){
+        if(root == NULL) return;
         
-        unordered_map<long, int> myFreq;
-        unordered_map<long, int> leftFreq = solve(root->left, target, cnt);
-        for(auto &__: leftFreq){
-            if(__.first+root->val == target)
-                cnt += __.second;
-            myFreq[__.first+root->val] = __.second;
-        }
+        curSum += root->val;
         
-        unordered_map<long, int> rightFreq = solve(root->right, target, cnt);
-        for(auto & __: rightFreq){
-            if(__.first+root->val == target)
-                cnt += __.second;
-             myFreq[__.first+root->val] += __.second;
-        }
+        if(sumFreq.count(curSum-target) > 0)
+            cnt += sumFreq[curSum-target];
         
-        if(target == root->val)
-            cnt++;
+        sumFreq[curSum]++; //So that upper if statement only calculates path involving atleast one node
         
-        myFreq[root->val]++;
-        return myFreq;
+        solve(root->left, sumFreq, curSum);
+        solve(root->right, sumFreq, curSum);
+        
+        sumFreq[curSum]--;
+        curSum -= root->val;               
     }
     
     int pathSum(TreeNode* root, int target) {
-        int cnt = 0;
-        solve(root, target, cnt);
+        //Same approach like subset sum equals k (But with tree traversal)
+        unordered_map<long, int> sumFreq;
+        
+        this->target = target;
+        long curSum = 0;
+        sumFreq[0] = 1;
+        
+        solve(root, sumFreq, curSum);
         return cnt;
     }
+    //T - O(n)
+    //S - O(n)
 };
