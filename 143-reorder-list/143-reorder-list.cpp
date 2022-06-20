@@ -11,25 +11,62 @@
 class Solution {
 public:
     
-    ListNode *reorder(ListNode *head){
-        if(head == NULL || head->next == NULL || head->next->next == NULL)
-            return head;
+    ListNode* reverse(ListNode *head){
+        ListNode *to = NULL;
+        ListNode *from = head;
         
-        ListNode* tail = head->next;
-        while(tail->next && tail->next->next)
-            tail = tail->next;
+        while(from){
+            ListNode *next = from->next;
+            from->next = to;
+            to = from;
+            from = next;
+        }
         
-        ListNode *prevTail = tail;
-        tail = tail->next;
-        prevTail->next = NULL;
-        
-        tail->next = reorder(head->next);
-        head->next = tail;
-        return head;
+        return to;
     }
     
     void reorderList(ListNode* head) {
-        reorder(head);    
+        
+        if(head == NULL || head->next == NULL)
+            return;
+        
+      /*Step-1. Find the middle point(start of second hald).
+        Step-2. Reverse the second half.
+        Step-3. Merge the first and the second half iteratively.*/
+        
+        ListNode* fast = head;
+        ListNode* slow = head;
+        
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        fast = slow;
+        slow = slow->next;
+        fast->next = NULL;
+        slow = reverse(slow);
+        
+        fast = head;
+        ListNode *tail = new ListNode(0, NULL);
+        head = tail;
+        
+        
+        while(fast || slow){
+            if(fast){
+                tail->next = fast;
+                tail = fast;
+                fast = fast->next;
+            }
+            
+            if(slow){
+                tail->next = slow;
+                tail = slow;
+                slow = slow->next;
+                
+            }
+        }
+        
+        head = head->next;
     }
     //T - O(n^2)
     //S - O(1)
