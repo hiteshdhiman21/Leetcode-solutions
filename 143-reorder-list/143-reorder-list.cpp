@@ -30,9 +30,9 @@ public:
         if(head == NULL || head->next == NULL)
             return;
         
-      /*Step-1. Find the middle point(start of second hald).
+      /*Step-1. Find the middle point(start of second half). Split the first and the second half.
         Step-2. Reverse the second half.
-        Step-3. Merge the first and the second half iteratively.*/
+        Step-3. Merge the first and the second half Alternatively using dummy head.*/
         
         ListNode* fast = head;
         ListNode* slow = head;
@@ -66,8 +66,8 @@ public:
             }
         }
         
-        head = head->next;
+        head = head->next; //Going to real head
     }
-    //T - O(n^2)
+    //T - O(n)
     //S - O(1)
 };
