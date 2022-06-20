@@ -15,7 +15,7 @@ public:
             ans += to_string(x);
         }
         
-        if(ans[0] == '0' && ans.back() == '0')
+        if(ans[0] == '0')
             return "0";
         
         return ans;
