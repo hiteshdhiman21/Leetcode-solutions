@@ -25,7 +25,6 @@ public:
             if(cur == dst) return curDist;
             if(curStops == k+1) continue;
             for(auto& [x, curToxDist]: adj[cur]){
-                cout << x <<" ";
                 int nextDist = curDist + curToxDist;
                 int nextStops = curStops+1;
                 
