@@ -4,6 +4,12 @@ class Solution {
     
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+      /*Step-1. First construct a map of the type for each string. 
+                {{"*ot": hot, got}, {"h*t": hot, hit}, {"ho*": hot, hog}}
+                First element is just typeOfString(mask), second element is a vector of all strings of type "typeOfString".
+        Step-2. Use BFS to find the shortest path to endWord. To find adjacent words for each word we will use the above map.
+        Step-3. For each string use strategy of prefSubstring + "*" + suffSubstring to construct mask.*/
+        
         for(string &str: wordList){
             for(int i = 0; i< str.size(); i++){
                 m[str.substr(0, i)+"*"+str.substr(i+1, str.size()-i-1)].push_back(str);
