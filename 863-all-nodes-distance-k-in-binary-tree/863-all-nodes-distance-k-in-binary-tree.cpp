@@ -61,12 +61,13 @@ public:
             
             dist++;   
         }
-        
-        
-        
     }
     
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+      /*Approach: Parent Annotation  
+        Step-1. Find all the connected nodes to every node. Node->left and Node->right are already there. Just also save Node->par for each node.
+        Step-2 Do BFS and find all the nodes at distance k from the target node. Explore outer layer relatives of the node(i.e, node->par, node->left, node->right) */
+        
         unordered_map<TreeNode*, TreeNode*> parent;
         generateParent(root, target, parent);
         
