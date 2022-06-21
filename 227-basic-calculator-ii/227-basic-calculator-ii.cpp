@@ -11,6 +11,8 @@ public:
         
         
         int curNum = 0;
+        int lastNum = 0;
+        int ans = 0;
         int sign = 1;
         stack<int> st;
         
@@ -25,14 +27,22 @@ public:
                 continue;
             }
                
-            if(curOp == '+') st.push(curNum);
-            else if(curOp == '-') st.push(-curNum);
+            if(curOp == '+'){
+                lastNum = curNum;
+                ans += curNum;
+            } 
+            else if(curOp == '-'){
+                lastNum = -curNum;
+                ans -= curNum;
+            } 
             else if(curOp == '*'){
-                int firstNum = st.top(); st.pop();
-                st.push(firstNum * curNum);
+                ans -= lastNum;
+                lastNum = lastNum * curNum;
+                ans += lastNum;
             }else{
-                int firstNum = st.top(); st.pop();
-                st.push(firstNum / curNum);
+                ans -= lastNum;
+                lastNum = lastNum / curNum;
+                ans += lastNum;
             } 
                
             curNum = 0;
@@ -42,11 +52,6 @@ public:
             else if(s[i] == '-') curOp = '-';
             else if(s[i] == '*') curOp = '*';
             else curOp = '/';
-        }
-        
-        int ans = 0;
-        while(!st.empty()){
-            ans += st.top(); st.pop();
         }
         
         return ans;
