@@ -1,6 +1,6 @@
 class Solution {
     
-    unordered_map<string, vector<string>> m;
+    unordered_map<string, vector<int>> m;
     
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
@@ -10,9 +10,10 @@ public:
         Step-2. Use BFS to find the shortest path to endWord. To find adjacent words for each word we will use the above map.
         Step-3. For each string use strategy of prefSubstring + "*" + suffSubstring to construct mask.*/
         
-        for(string &str: wordList){
+        for(int ind =0; ind<wordList.size(); ind++){
+            string str = wordList[ind];
             for(int i = 0; i< str.size(); i++){
-                m[str.substr(0, i)+"*"+str.substr(i+1, str.size()-i-1)].push_back(str);
+                m[str.substr(0, i)+"*"+str.substr(i+1, str.size()-i-1)].push_back(ind);
             }
         }
         
@@ -29,9 +30,9 @@ public:
                 if(cur == endWord) return k;
                 for(int i = 0; i< cur.size(); i++){
                     string xType = cur.substr(0, i)+"*"+cur.substr(i+1, cur.size()-i-1);
-                    for(string &x: m[xType])
-                        if(!vis.count(x)){
-                            q.push(x); vis.insert(x);
+                    for(int ind: m[xType])
+                        if(!vis.count(wordList[ind])){
+                            q.push(wordList[ind]); vis.insert(wordList[ind]);
                         }
                 }
             }
