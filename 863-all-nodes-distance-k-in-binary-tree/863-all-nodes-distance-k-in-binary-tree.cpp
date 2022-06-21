@@ -10,69 +10,63 @@
 class Solution {
 public:
     
-    void generateParent(TreeNode *root, TreeNode* target, unordered_map<TreeNode*, TreeNode*>& parent){
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode *cur = q.front(); q.pop();
-            if(cur->left){
-                q.push(cur->left);
-                parent[cur->left] = cur;
-            }
-            if(cur->right){
-                q.push(cur->right);
-                parent[cur->right] = cur;
-            }
+    void addSubTree(TreeNode *root, int dist, vector<int> &res){
+        
+        if(root == NULL || dist < 0){
+            return;
+        }else if(dist == 0){
+            res.push_back(root->val);
+            return;
         }
+        
+        addSubTree(root->left, dist-1, res);
+        addSubTree(root->right, dist-1, res);      
+        
     }
     
-    void solve(TreeNode* target, int k, unordered_map<TreeNode*, TreeNode*>& parent, vector<int> &res){
-        queue<TreeNode*> q;
-        unordered_set<TreeNode*> vis; 
-        q.push(target);
-        vis.insert(target);
-        int dist = 0;
-        
-        while(!q.empty()){
-            
-            if(dist == k){
-                while(!q.empty()){
-                    res.push_back(q.front()->val);
-                    q.pop();
-                }
-            }
-            
-            int qSize = q.size();
-            for(int i=1; i<=qSize; i++){
-                TreeNode *cur = q.front();  q.pop();
-                if(cur->left && !vis.count(cur->left)){
-                    q.push(cur->left);
-                    vis.insert(cur->left);
-                } 
-                if(cur->right && !vis.count(cur->right)){
-                    q.push(cur->right);
-                    vis.insert(cur->right);
-                } 
-                if(parent.count(cur)&& !vis.count(parent[cur])){
-                    q.push(parent[cur]);
-                    vis.insert(parent[cur]);
-                } 
-            }
-            
-            dist++;   
+    int dfs(TreeNode* root, TreeNode* target, int k, vector<int> &res){
+        if(root == NULL)
+            return -1;
+        else if(root == target){
+            addSubTree(root->left, k-1, res);
+            addSubTree(root->right, k-1, res);
+            return 0;
         }
+            
+        
+        int dist = -1;
+        int dist1 = dfs(root->left, target, k, res);
+        if(dist1 != -1){
+            dist = dist1+1;
+            addSubTree(root->right, k-dist-1, res);
+            if(dist == k)
+                res.push_back(root->val);
+        }else{
+            int dist2 = dfs(root->right, target, k, res);
+            if(dist2 != -1){
+                dist = dist2+1;
+                addSubTree(root->left, k-dist-1, res);
+                if(dist == k)
+                    res.push_back(root->val);
+            } 
+        }
+        
+        return dist;
     }
     
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-      /*Approach: Parent Annotation  
-        Step-1. Find all the connected nodes to every node. Node->left and Node->right are already there. Just also save Node->par for each node.
-        Step-2 Do BFS and find all the nodes at distance k from the target node. Explore outer layer relatives of the node(i.e, node->par, node->left, node->right) */
+      /*Approach: DFS (Use 1 function to find Dist of target and 1 to add nodes at a distance k)
+        DFS:
+        Step-1. Call DFS on left child. If node found on left side with distance = dist. If dist < k Then call addSubtree on right child with distance = k-dist-1. Else if dist == k. Add current node to res. 
+        Step-2. If node not found on left side. Then call dfs on right side similary.
+        Step-3. If current node == target. Then call addSubtree on its left and right childs with dist = k-1.
+        Step-4. Add subtree: It will only add the nodes at a given distance from the root node.*/
         
-        unordered_map<TreeNode*, TreeNode*> parent;
-        generateParent(root, target, parent);
+        if(k==0)
+            return {target->val};
         
         vector<int> res;
-        solve(target, k, parent, res);
+        dfs(root, target, k, res);
         return res;
     }
     //T - O(n)
