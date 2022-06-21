@@ -7,7 +7,7 @@ public:
       /*Step-1. First construct a map of the type for each string. 
                 {{"*ot": hot, got}, {"h*t": hot, hit}, {"ho*": hot, hog}}
                 First element is just typeOfString(mask), second element is a vector of all strings of type "typeOfString".
-        Step-2. Use BFS to find the shortest path to endWord. To find adjacent words for each word we will use the above map.
+        Step-2. Use Biderectional-BFS to find the shortest path to endWord. To find adjacent words for each word we will use the above map.
         Step-3. For each string use strategy of prefSubstring + "*" + suffSubstring to construct mask.*/
         bool isEndWordPresent = false;
         for(int ind =0; ind<wordList.size(); ind++){
@@ -33,7 +33,7 @@ public:
         while(!q1.empty() && !q2.empty()){
            
             int q1Size = q1.size();
-            for(int node = 0; node<q1Size; node++){
+            for(int node = 0; node<q1Size; node++){ //Explore all same level nodes and look for node explored from the end
                 string cur = q1.front(); q1.pop();
                 for(int i = 0; i< cur.size(); i++){
                     string xType = cur.substr(0, i)+"*"+cur.substr(i+1, cur.size()-i-1);
@@ -53,7 +53,7 @@ public:
             int q2Size = q2.size();
             for(int node = 0; node<q2Size; node++){
                 string cur = q2.front(); q2.pop();
-                for(int i = 0; i< cur.size(); i++){
+                for(int i = 0; i< cur.size(); i++){ //Explore all same level nodes and look for node explored from the start
                     string xType = cur.substr(0, i)+"*"+cur.substr(i+1, cur.size()-i-1);
                     for(int ind: m[xType]){
 
