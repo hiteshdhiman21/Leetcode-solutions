@@ -42,5 +42,5 @@ public:
         return curRes;
     }
     //T - O(n)
-    //S - O(1)
+    //S - O(n)
 };
