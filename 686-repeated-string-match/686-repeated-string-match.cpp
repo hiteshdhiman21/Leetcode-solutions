@@ -13,6 +13,7 @@ public:
     }
     
     int repeatedStringMatch(string a, string b) {
+        //Rabin karp
         long bHash = 0, aHash = 0;
         long wt = 1;
         int blen = b.size();
@@ -37,7 +38,7 @@ public:
         }
         
         if(indA == -1)  return indA;
-        else return (indA+blen-1)/a.size() + 1;
+        else return (indA+blen-1)/a.size() + 1; //Finding repetition accoring to lastIndex needed
     }
     //T - O(alen*blen) in the worst case and O(alen+blen) in the avg case
     //S - O(1)
