@@ -1,6 +1,7 @@
 class Solution {
 public:
     string countAndSay(int n) {
+        //What is the nth string generated following count and say method
         if(n==1)
             return "1";
         
