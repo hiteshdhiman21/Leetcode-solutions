@@ -25,6 +25,6 @@ public:
         
         return dp[n%2];
     }
-    //T - O(n*k) , where k = avg length of n strings
+    //T - O(n*k) , where k = avg length of n strings generated
     //S - O(2*maxLength)
 };
