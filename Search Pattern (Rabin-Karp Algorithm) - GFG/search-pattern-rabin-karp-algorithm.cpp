@@ -19,19 +19,19 @@ class Solution
     
         vector <int> search(string pat, string txt)
         {
-            int patHash = 0, winHash = 0;
-            int wt = 1;
+            long patHash = 0, winHash = 0;
+            long wt = 1;
             
             int len = pat.size();
             for(int i = pat.size()-1; i>=0; i--){
                 int charVal = int(pat[i]);
-                patHash = ((long)patHash+(((long)charVal*wt))%mod)%mod;
+                patHash = (patHash+(charVal*wt)%mod)%mod;
                 
                 charVal = int(txt[i]);
-                winHash = ((long)winHash+(((long)charVal*wt))%mod)%mod;
+                winHash = (winHash+(charVal*wt)%mod)%mod;
                 
                 if(i!=0)
-                wt = ((long)wt*base)%mod;
+                wt = (wt*base)%mod;
             }
             
             vector<int> res;
@@ -44,12 +44,9 @@ class Solution
                 int oldCharVal = int(txt[i]);
                 int newCharVal = int(txt[i+len]);
               
-                winHash = (((long)winHash - ((long)oldCharVal*wt)%mod)%mod + mod)%mod;
-                winHash = ((long)winHash*base)%mod;
-                winHash = ((long)winHash + newCharVal)%mod;
-            
-                
-                
+                winHash = ((winHash - oldCharVal*wt)%mod + mod)%mod;
+                winHash = (winHash*base)%mod;
+                winHash = (winHash + newCharVal)%mod;
             }
             
             if(res.size() == 0) return {-1};
@@ -57,6 +54,7 @@ class Solution
             return res;
             
         }
+        /
      
 };
 
