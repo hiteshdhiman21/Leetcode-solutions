@@ -1,51 +1,47 @@
 class Solution {
     
-    int mod = 1e9+7;
-    int base = 256;
-    
 public:
     
-    bool isEqual(string &txt, int &si, string &pat){
-        for(int i = 0; i<pat.size(); i++){
-            if(txt[i+si] != pat[i]) return false;
+    void makeLPS(vector<int> &lps, int& m, string& pat){
+        int i =1, prevLPS = 0;
+        while(i<m){
+            if(pat[i] == pat[prevLPS]){
+                lps[i] = prevLPS+1;
+                prevLPS++;
+                i++;
+            }else if(prevLPS == 0){
+                lps[i] = 0;
+                i++;
+            }else{
+                prevLPS = lps[prevLPS-1]; 
+            }
         }
-
-        return true;
+        
     }
     
     int strStr(string txt, string pat) {
-        if(pat.size() == 0) return 0;
-        else if(pat.length() > txt.length()) return -1;
+        //Make Lps
+        int n = txt.size(), m = pat.size();
+        vector<int> lps(m, 0);
+        makeLPS(lps, m, pat);
         
-        long patHash = 0, winHash = 0;
-        long wt = 1;
-
-        int len = pat.size();
-        for(int i = pat.size()-1; i>=0; i--){
-
-            patHash += pat[i]*wt; patHash %= mod;
-            winHash += txt[i]*wt; winHash %= mod;
-
-            if(i!=0)
-            wt = (wt*base)%mod;
-        }
-
-        int ans = -1;
-
-        for(int i = 0; i<=txt.size()-pat.size(); i++){ //i is start of current window
-            if(patHash == winHash && isEqual(txt, i, pat)){
-                ans = i;
-                break;
-            }
-
-            winHash -= (txt[i]*wt)%mod;
-            if(winHash < 0) winHash = winHash+mod;
-            winHash *= base; winHash %= mod;
-            winHash += txt[i+len]; winHash %= mod;
-        }
-
-        return ans;
+        
+        
+        int i = 0, j = 0;
+        while(i < n){
+            if(txt[i] == pat[j]){
+                i++; j++;
+            }else if(j!=0){
+                j = lps[j-1];
+            }else{
+                i++;
+            } 
+            
+            if(j == m) return i-m;
+        }   
+        
+        return -1;       
     }
-    //Tavg - O(n), Tworst - O(n*m)
-    //S - O(1)
+    //T - O(n+m)
+    //S - O(m)
 };
