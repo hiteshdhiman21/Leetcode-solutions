@@ -1,6 +1,9 @@
 class Solution {
 public:
     void solve(vector<vector<char>>& board) {
+        
+      /*Used BFS starting from Boundary O's
+        No need for visited array. if Board[i][j] == 'X', No need to change hence continue. Else if board[i][j] == 'S', Already changed and explored hence continue. Else if Board[i][j] == 'O', Not explored but need to explore, Hence set board[i][j] = 'S' and push it into the queue*/
         int n = board.size(), m = board[0].size();
         queue<pair<int, int>> q;
         
@@ -52,4 +55,7 @@ public:
             }
         }
     }
+    
+    //T - O(n*m)
+    //S - O(n*m)
 };
