@@ -90,6 +90,9 @@ public:
 class Solution {
 public:
     vector<string> wordBreak(string s, vector<string>& wordDict) {
+      /*Used trie in place of unordered_map for insertion and searching
+        Note that we could have also use unordered set but that would lead to O(n) to search each substring, but with trie it would only take O(1) to search each substring
+      */
         Trie *t = new Trie;
         for(string &str: wordDict)
             t->insert(str);
@@ -97,4 +100,6 @@ public:
         t->solve(s);
         return t->res;
     }
+    //T - O(2^n+ allCharactersInWordDict)   where n = s.size()
+    //S - O(26*allCharactersInWordDict)
 };
