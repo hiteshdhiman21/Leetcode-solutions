@@ -2,6 +2,8 @@ class Solution {
 public:
     
     bool isMatch(string s, string p) {
+      /*Use m and n fully and also update them fully. 
+        Many corner cases: case1: "a", "a**". case2: "", "*". Case3: "abcdeabf", "a***c*bf**".*/   
         int n = s.size(), m = p.size();
         vector<vector<bool>> match(m+1, vector<bool>(n+1));
         
@@ -16,13 +18,8 @@ public:
             }
         }       
         
-        /*for(int i =0; i<=m; i++){
-            for(int j =0; j<=n; j++){
-                cout << match[i][j] << " ";
-            }
-            cout << endl;
-        }*/
-        
         return match[0][0];
     }
+    //T - O(n*m)
+    //S - O(n*m) can be modified to O(n)
 };
