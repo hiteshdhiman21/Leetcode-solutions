@@ -51,7 +51,7 @@ public:
         cur->setEnd();
     }
     
-    void search(string& s, int ind, string ds) {
+    void search(string& s, int ind, string& ds) {
         if(ind == s.size()){
             res.push_back(ds);
             res.back().pop_back();
@@ -61,7 +61,7 @@ public:
         Node *cur = root;
         
         int i;
-        for(int i=ind; i<s.size(); i++){
+        for(i=ind; i<s.size(); i++){
             if(!cur->containsKey(s[i])) break;
             ds += s[i];
             
@@ -72,9 +72,9 @@ public:
                 ds.pop_back();
             }  
         }
-        
+    
         i--;
-        while(i >= ind && ds.size() > 0){
+        while(i >= ind){
             ds.pop_back();
             i--;
         }
