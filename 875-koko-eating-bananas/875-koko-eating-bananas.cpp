@@ -17,6 +17,7 @@ public:
     }
     
     int minEatingSpeed(vector<int>& piles, int h) {
+      /*Classical Binary search problem: Agressive cows*/
         int s = 1, e = 1e9;
         int k = -1;
         while(s<=e){
@@ -32,4 +33,6 @@ public:
         
         return k;
     }
+    //T - O(nlogm), where n = piles.length() and m = max(piles[i])
+    //S - O(1)
 };
