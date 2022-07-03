@@ -17,7 +17,7 @@ public:
         followedBy.resize(N+1);
     }
     
-    void postTweet(int userId, int tweetId) {
+    void postTweet(int userId, int tweetId) {//T - O(n*f + t*logn), where f = followers of user and t = total tweets of user
         followedBy[userId].insert(userId);
         for(int x: followedBy[userId]){
             setFor[x].insert(cntr);
@@ -29,7 +29,7 @@ public:
         cntr++;
     }
     
-    vector<int> getNewsFeed(int userId) {
+    vector<int> getNewsFeed(int userId) {//T - O(10*logn) , n = totalFeedSizeOfFollower 
         vector<int> res;
         for(auto it = setFor[userId].rbegin(); it != setFor[userId].rend(); it++){
             int cntr = *it;
@@ -40,7 +40,7 @@ public:
         return res;
     }
     
-    void follow(int followerId, int followeeId) {
+    void follow(int followerId, int followeeId) {//T - O(nlogn) , n = totalTweetsByFollowee
         followedBy[followeeId].insert(followerId);
         
         for(int tweetCntr: userVsTweet[followeeId]){
@@ -48,7 +48,7 @@ public:
         }
     }
     
-    void unfollow(int followerId, int followeeId) {
+    void unfollow(int followerId, int followeeId) {//T - O(nlogn) , n = totalFeedSizeOfFollower
         followedBy[followeeId].erase(followerId);
         
         vector<int> tweetsFromFolloweeId;
