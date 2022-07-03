@@ -1,22 +1,22 @@
-using minHeap = priority_queue<int, vector<int>, greater<int>>; 
+/*Very easy to implement approach*/
 #define N 500
 
 class Twitter {
 
 private:
     vector<vector<int>> timeline;
-    vector<set<int>> following; 
+    vector<unordered_set<int>> following; 
     
 public:
     Twitter() {
         following.resize(N+1);
     }
     
-    void postTweet(int userId, int tweetId) {
+    void postTweet(int userId, int tweetId) { //T - O(1)
         timeline.push_back({userId, tweetId});
     }
     
-    vector<int> getNewsFeed(int userId) {
+    vector<int> getNewsFeed(int userId) { //T - O(Total Tweets)
         vector<int> res;
         
         for(int i = (int)timeline.size()-1; i>=0; i--){
@@ -28,14 +28,15 @@ public:
         return res;
     }
     
-    void follow(int followerId, int followeeId) {
+    void follow(int followerId, int followeeId) { //T - O(1)
         following[followerId].insert(followeeId);
     }
     
-    void unfollow(int followerId, int followeeId) {
+    void unfollow(int followerId, int followeeId) { // T- O(1)
         following[followerId].erase(followeeId);
     }
 };
+//S - O(Total Tweets + Total followings)
 
 /**
  * Your Twitter object will be instantiated and called as such:
