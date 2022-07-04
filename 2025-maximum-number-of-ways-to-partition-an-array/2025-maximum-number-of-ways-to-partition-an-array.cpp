@@ -1,6 +1,7 @@
 class Solution {
 public:
     int waysToPartition(vector<int>& nums, int k) {
+        
         int n = nums.size();
         
         long totSum = 0;
@@ -17,8 +18,6 @@ public:
             if(totSum == 0)
                 res--;
         }
-                
-            
         
         long suffSum = totSum;
         long prefSum = 0;
@@ -28,14 +27,9 @@ public:
             suffSumCnt[suffSum]--;
             if(totSumAfterUpdate%2 == 0){
                 int part2 = suffSumCnt[totSumAfterUpdate/2];
-                int part1 = prefSumCnt[totSumAfterUpdate/2];
-                int now = 0;
-                //if(suffSum -nums[i] != totSumAfterUpdate/2 && prefSum+k == totSumAfterUpdate/2) now++;
-                //cout << i << " " <<part1 << " " << part2 << " " << now << endl;
-                res = max(res, now+part1+part2);
+                int part1 = prefSumCnt[totSumAfterUpdate/2]; //No need of Now variable
+                res = max(res, part1+part2);
             }
-            
-           
             
             prefSum += nums[i];
             prefSumCnt[prefSum]++;
