@@ -28,10 +28,9 @@ public:
             suffSumCnt[suffSum]--;
             if(totSumAfterUpdate%2 == 0){
                 int part2 = suffSumCnt[totSumAfterUpdate/2];
-                suffSumCnt[totSumAfterUpdate/2]; 
                 int part1 = prefSumCnt[totSumAfterUpdate/2];
                 int now = 0;
-                if(suffSum -nums[i] != totSumAfterUpdate/2 && prefSum+k == totSumAfterUpdate/2) now++;
+                //if(suffSum -nums[i] != totSumAfterUpdate/2 && prefSum+k == totSumAfterUpdate/2) now++;
                 //cout << i << " " <<part1 << " " << part2 << " " << now << endl;
                 res = max(res, now+part1+part2);
             }
