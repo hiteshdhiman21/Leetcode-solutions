@@ -1,6 +1,10 @@
 class Solution {
 public:
     int rob(vector<int>& nums) {
+      /*Dp:
+        Two iterations: Since we can't take both nums[0] and nums[nums.size()-1]
+        1. Use HouseRobber1 on nums[1...(n-1)]
+        2. Use HouseRobber1 on nums[2....n]*/
         if(nums.size() == 1)
             return nums[0];
         
