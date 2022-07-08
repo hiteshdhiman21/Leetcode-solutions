@@ -28,12 +28,14 @@ public:
     }
     
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        //Approach: DSU
         int n = edges.size();
         vector<int> parent(n+1), rank(n+1);
         make(parent, rank);
         
         vector<int> ans;
         
+        //There is only one edge which is creating a cycle
         for(int i=0; i<n; i++){
             if(!Union(edges[i][0], edges[i][1], parent, rank)){
                 ans = edges[i];
