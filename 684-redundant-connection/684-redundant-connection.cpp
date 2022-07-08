@@ -45,6 +45,6 @@ public:
         
         return ans;
     }
-    //T - O(n)
+    //T - O(n*alpha) = O(n)
     //S - O(n)
 };
