@@ -23,4 +23,6 @@ public:
         
         return sell[n-1];
     }
+    //T - O(n)
+    //S - O(n) can be modified to O(1)
 };
