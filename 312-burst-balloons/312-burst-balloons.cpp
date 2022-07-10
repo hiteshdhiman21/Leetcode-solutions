@@ -23,6 +23,6 @@ public:
         vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), -1));
         return solve(nums, 0, nums.size()-1, dp);
     }
-    //T - O(n*n)
+    //T - O(n*n*n)
     //S - O(n*n)
 };
