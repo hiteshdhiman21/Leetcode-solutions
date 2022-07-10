@@ -2,7 +2,7 @@ class Solution {
 public:
     
     int solve(vector<int> &nums, int s, int e, vector<vector<int>> &dp){
-        if(s>e) return 0;
+        if(s>e) return 0; //No balloon to find last bursted out of all balloons.
         if(dp[s][e] != -1)
             return dp[s][e];
         
