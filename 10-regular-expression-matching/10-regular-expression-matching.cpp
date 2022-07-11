@@ -2,25 +2,35 @@ class Solution {
 public:
     
     bool solve(string &s, string &p, int i1, int i2, char &prvCh){
-        //cout << i1 << " " << i2 << " " << prvCh << endl;
+      /*Valid inputs for pattern: ab, abb, a*.., ab*, a.*, ab*c*.
+        Invalid inputs for pattern: a**, *ab, ab*c**c
         
-        if(i1 == s.size() && i2 == p.size())
-            return true;
-        else if(i2 == p.size())
-            return false;
-        else if(i1 == s.size() + 1)
-            return false;
+        Step-1. If s and p both ends. means both are matched. Hence return true
+        Step-2. If p reaches end but s still remains return false. As there is no p to match s further.
+        Step-3. If s reached end and p can also reach end without any mathcing [cases Prem = "*", "a*", ".*"] return true. Else if p can't reach end without matching any character, Return false.
+        Step-4. p[i2+1] == '*', just straight go to that index and from there try match i2 as many times as needed with i1.
+        Step-5. If p[i2] == '*', Now either just skip it (i1, i2+1) or match it with i1 (i1+1, i2) (as i2 can also match with further i1).
+        Step-6. If s[i1] == p[i2] || p[i2] == '.', it means i1 and i2 can match hence go to (i1+1, i2+1). Else it means both can't be matched. return False.*/
         
         int n1 = s.size(), n2 = p.size();
+        
+        if(i1 == n1 && i2 == n2)
+            return true;
+        else if(i2 == n2)
+            return false;
+        else if(i1 == n1+1) //If i1 surpasses the end of s1. Else if i1 is at end. We can wait for i2 to reach p end also. (cases like Prem = *, a*, b*a*c*)
+            return false;
+        
+        
         
         if(i2+1<n2 && p[i2+1] == '*' ){
             return solve(s, p, i1, i2+1, p[i2]);
         }else if(p[i2] == '*'){
             bool res = solve(s, p, i1, i2+1, p[i2]);
-            if(i1 < s.size() && prvCh == s[i1] || prvCh == '.')
+            if(i1 < n1 && prvCh == s[i1] || prvCh == '.')
             res = res | solve(s, p, i1+1, i2, prvCh);
             return res;
-        }else if(i1 < s.size() && s[i1] == p[i2] || p[i2] == '.'){
+        }else if(i1 < n1 && s[i1] == p[i2] || p[i2] == '.'){
             return solve(s, p, i1+1, i2+1, p[i2]);
         }
         return false;
