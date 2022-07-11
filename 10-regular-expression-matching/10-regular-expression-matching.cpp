@@ -8,8 +8,7 @@ public:
         Step-1. If s and p both ends. means both are matched. Hence return true
         Step-2. If p reaches end but s still remains return false. As there is no p to match s further.
         Step-3. If s reached end and p can also reach end without any mathcing [cases Prem = "*", "a*", ".*"] return true. Else if p can't reach end without matching any character, Return false.
-        Step-4. p[i2+1] == '*', just straight go to that index and from there try match i2 as many times as needed with i1.
-        Step-5. If p[i2] == '*', Now either just skip it (i1, i2+1) or match it with i1 (i1+1, i2) (as i2 can also match with further i1).
+        Step-4. p[i2+1] == '*', It means we can skip p[i2] and directly go to (i1, i2+2) or we can use p[i2] if p[i2] == '.' || s[i1] == p[i2] and again go to (i1+1, i2) for the same choice again.
         Step-6. If s[i1] == p[i2] || p[i2] == '.', it means i1 and i2 can match hence go to (i1+1, i2+1). Else it means both can't be matched. return False.*/
         
         int n1 = s.size(), n2 = p.size();
