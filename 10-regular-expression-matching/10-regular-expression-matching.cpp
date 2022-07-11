@@ -33,6 +33,6 @@ public:
         
         return dp[0][0];
     }
-    //T - O(3n)
-    //S - O(n*m) can be modified to O(n)
+    //T - O(n*m)
+    //S - O(3n) can be modified to O(n)
 };
