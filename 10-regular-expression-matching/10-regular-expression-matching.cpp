@@ -34,8 +34,25 @@ public:
     }
     
     bool isMatch(string s, string p) {
-        vector<vector<int>> dp(s.size()+1, vector<int>(p.size()+1, -1));
-        return solve(s, p, 0, 0, dp);
+        int n1 = s.size(), n2 = p.size();
+        vector<vector<bool>> dp(n1+1, vector<bool>(n2+1, false));
+        dp[n1][n2] = true;
+        
+        for(int i1=n1; i1>=0; i1--){
+            for(int i2=n2; i2>=0; i2--){
+                
+                if(i2 < n2 && p[i2] == '*') continue;
+                
+                if(i2+1 < n2 && p[i2+1] == '*'){
+                    dp[i1][i2] = dp[i1][i2+2];
+                    if(i1 < n1 && (s[i1] == p[i2] || p[i2] == '.'))
+                       dp[i1][i2] = dp[i1][i2] | dp[i1+1][i2];
+                }else if(i1 < n1 && (s[i1] == p[i2] || p[i2] == '.'))
+                       dp[i1][i2] = dp[i1+1][i2+1];
+            }
+        }
+        
+        return dp[0][0];
     }
     //T - O(n*m)
     //S - O(n*m) can be modified to O(n)
