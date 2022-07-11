@@ -1,9 +1,7 @@
 class Solution {
 public:
     bool isPossibleDivide(vector<int>& nums, int k) {
-        
-        if(nums.size()%k != 0) return false;
-        
+                
         map<int, int> freq;
         for(int x: nums)
             freq[x]++;
