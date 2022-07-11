@@ -7,10 +7,12 @@ public:
             else if(ch == ')') openMx--, openMn--;
             else openMn--, openMx++;
             
-            if(openMn < 0) openMn = 0;
-            if(openMx < 0) return false;
+            if(openMn < 0) openMn = 0; //Just change old perception of '*' from ')' to '('
+            if(openMx < 0) return false; //Can't change old perception. Because we already treated '*' as '(' and still it became negative.
         }
         
         return openMn==0;
     }
+    //T - O(n)
+    //S - O(1)
 };
