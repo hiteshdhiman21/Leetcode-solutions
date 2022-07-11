@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    bool solve(string &s, string &p, int i1, int i2, char &prvCh, vector<vector<int>> &dp){
+    bool solve(string &s, string &p, int i1, int i2,  vector<vector<int>> &dp){
       /*Valid inputs for pattern: ab, abb, a*.., ab*, a.*, ab*c*.
         Invalid inputs for pattern: a**, *ab, ab*c**c
         
@@ -14,33 +14,29 @@ public:
         
         int n1 = s.size(), n2 = p.size();
         
-        if(i1 == n1 && i2 == n2)
-            return true;
-        else if(i2 == n2)
-            return false;
-        else if(i1 == n1+1) //If i1 surpasses the end of s1. Else if i1 is at end. We can wait for i2 to reach p end also. (cases like Prem = *, a*, b*a*c*)
-            return false;
+        if(i1 == n1 && i2 == n2) return true;
+        else if(i2 == n2) return false;
+        //If i1 surpasses the end of s1. Else if i1 is at end. We can wait for i2 to reach p end also. (cases like Prem = *, a*, b*a*c*)
+        else if(i1 == n1+1) return false;
         
         if(dp[i1][i2] != -1)
             return dp[i1][i2];
         
         if(i2+1<n2 && p[i2+1] == '*' ){
-            return dp[i1][i2] = solve(s, p, i1, i2+1, p[i2], dp);
-        }else if(p[i2] == '*'){
-            bool res = solve(s, p, i1, i2+1, p[i2], dp);
-            if(i1 < n1 && prvCh == s[i1] || prvCh == '.')
-            res = res | solve(s, p, i1+1, i2, prvCh, dp);
+            bool res = solve(s, p, i1, i2+2, dp);
+            if(i1 < n1 && s[i1] == p[i2] || p[i2] == '.')
+            res = res | solve(s, p, i1+1, i2, dp);
             return dp[i1][i2] = res;
         }else if(i1 < n1 && s[i1] == p[i2] || p[i2] == '.'){
-            return dp[i1][i2] = solve(s, p, i1+1, i2+1, p[i2], dp);
+            return dp[i1][i2] = solve(s, p, i1+1, i2+1, dp);
         }
+        
         return dp[i1][i2] = false;
     }
     
     bool isMatch(string s, string p) {
-        char prvCh = '1';
         vector<vector<int>> dp(s.size()+1, vector<int>(p.size()+1, -1));
-        return solve(s, p, 0, 0, prvCh, dp);
+        return solve(s, p, 0, 0, dp);
     }
     //T - O(n*m)
     //S - O(n*m) can be modified to O(n)
