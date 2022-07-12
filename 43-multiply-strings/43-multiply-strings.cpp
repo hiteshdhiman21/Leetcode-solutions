@@ -27,13 +27,10 @@ public:
         string res = "";
         
         for(int i=0; i<num2.size(); i++){
-            //cout <<"\n" << i <<": ";
             string row = "";
             for(int time=0; time<i; time++) row += "0";
             int c = 0;
-            for(int j=0; j<num1.size() || c!=0; j++){
-                //cout << j <<" ";
-                
+            for(int j=0; j<num1.size() || c!=0; j++){                
                 int prod = c;
                 if(j<num1.size()) prod += (num2[i]-'0')*(num1[j]-'0');
                 c = prod/10;
@@ -49,4 +46,7 @@ public:
         reverse(res.begin(), res.end());
         return res;
     }
+    //T - O(m*n)
+    //S - O(m+n)
+    
 };
