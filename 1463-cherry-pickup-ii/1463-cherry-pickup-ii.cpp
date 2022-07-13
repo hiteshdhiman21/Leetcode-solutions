@@ -1,4 +1,5 @@
 #define vvvi(v, n, m, p, val) vector<vector<vector<int>>>  v(n, vector<vector<int>>(m, vector<int>(p, val)));
+#define ll long long
 class Solution {
 public:
     int cherryPickup(vector<vector<int>>& grid) {
@@ -30,6 +31,8 @@ public:
         
         return dp[0][0][m-1];    
     }
+    //T - O(n*m*m)
+    //S - O(m*m)
 };
 
    
