@@ -32,7 +32,7 @@ public:
         return dp[0][0][m-1];    
     }
     //T - O(n*m*m)
-    //S - O(m*m)
+    //S - O(n*m*m) can be optimized to O(m*m)
 };
 
    
