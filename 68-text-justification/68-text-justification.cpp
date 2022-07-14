@@ -50,4 +50,6 @@ public:
         
         return res;
     }
+    //T - O(total Characters in output) = O(totalLines*maxWidth)
+    //S - O(1)
 };
