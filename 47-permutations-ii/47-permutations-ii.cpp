@@ -1,37 +1,32 @@
 class Solution {
 public:
     
-    void solve(unordered_map<int, int>& freq, vector<int> &ds, vector<vector<int>> &ans, int ind ,int n){
-        if(ind == n){
-            ans.push_back(ds);
-            return;
-        }
-        
-        
-        for(auto [x, f]: freq){
-            
-            if(f==0) continue;
-            
-            ds.push_back(x);
-            freq[x]--;
-            
-            solve(freq, ds, ans, ind+1, n);
-            
-            ds.pop_back();
-            freq[x]++;
-        }
+    void solve(vector<int>& nums, int ind, vector<vector<int>>& ans){
+    if(ind == nums.size()){
+        ans.push_back(nums);
+        return;
     }
+ //Maintained set so that do not set same value in ind different times.
+    set<int> s;
+    for(int i=ind; i<nums.size(); i++){
+        if(s.count(nums[i])){
+            //cout << ind << " "<<i << endl;
+            continue;
+        }
+        
+        s.insert(nums[i]);
+        swap(nums[ind], nums[i]);
+        solve(nums, ind+1, ans);
+        swap(nums[ind], nums[i]);
+        
+    }
+}
     
     
     vector<vector<int>> permuteUnique(vector<int>& nums) {
         
-        unordered_map<int, int> freq;
-        for(int x: nums)
-            freq[x]++;
-        
-        vector<vector<int>> ans; 
-        vector<int> ds;
-        solve(freq, ds, ans, 0, nums.size());
+        vector<vector<int>> ans;        
+        solve(nums, 0, ans);
         return ans;
         
         //T - O(nPk)  //n!/(n-k)! 
