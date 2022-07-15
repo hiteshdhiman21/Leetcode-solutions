@@ -33,6 +33,6 @@ public:
         
         return res;
     }
-    //T - O(nlogn+nlogn)
+    //T - O(n*n)
     //S - O(n)
 };
