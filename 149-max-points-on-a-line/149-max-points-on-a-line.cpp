@@ -18,7 +18,8 @@ public:
                 if(dx < 0) dx = -dx, dy = -dy;
                 
                 int g = gcd(dx, dy);
-                dx /= g; dy /= g;
+                dx /= g; dy /= g; 
+                //It also handles infnite slope case by (1,0) and 0 slope by (0, 1).
                 
                 freqSlope[{dx, dy}]++;
                 res = max(res, freqSlope[{dx, dy}]+1);
@@ -27,4 +28,6 @@ public:
         
         return res;
     }
+    //T - O(n*n)
+    //S - O(n)
 };
