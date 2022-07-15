@@ -29,7 +29,6 @@ void updateTree(vector<int> &tree, int start, int end, int treeNode, int idx){
 }
 
 int QueryOnTree(vector<int> &tree, int start, int end, int treeNode, int noFrees){
-    //cout << start << " " << end << "          ";
     if(start == end){
         return start;
     }else if(start > end){
@@ -37,8 +36,6 @@ int QueryOnTree(vector<int> &tree, int start, int end, int treeNode, int noFrees
     }
     
     int mid = (start+end)/2;
-    
-    //cout << treeNode << " " << tree[treeNode] <<  endl;
  
     if(tree[2*treeNode] > noFrees){
         return QueryOnTree(tree, start, mid, 2*treeNode, noFrees);
@@ -68,14 +65,14 @@ public:
         vector<vector<int>> res(n);
         
         for(int i=0; i<n; i++){
-            cout << i <<" ";
             int h = people[i][0], k = people[i][1];
             int ind = QueryOnTree(tree, 0, n-1, 1, k);
-            cout << ind  << endl;
             res[ind] = people[i];
             updateTree(tree, 0, n-1, 1, ind);
         }
         
         return res;
     }
+    //T - O(nlogn+nlogn)
+    //S - O(n)
 };
