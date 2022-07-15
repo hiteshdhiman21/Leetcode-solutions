@@ -4,7 +4,7 @@ public:
     static bool cmp(vector<int> &a, vector<int>&b)
     {
         if(a[0] == b[0])
-            return a[1] > b[1];
+            return a[1] < b[1];
         return a[0] < b[0];
     }
 
@@ -25,7 +25,7 @@ public:
             int j;
             for(j=0; j<n; j++){
                 
-                if(res[j].size() == 0) cnt++;
+                if(res[j].size() == 0 || res[j][0] == h) cnt++;
                 if(cnt == k+1) break;
             }
             res[j] = people[i];
