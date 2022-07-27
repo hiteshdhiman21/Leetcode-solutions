@@ -50,5 +50,5 @@ return head;
         return lists[0];
     }
     //T - O(nlogk) , where n = total nodes
-    //S - O(k)
+    //S - O(1)
 };
